@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { RepositoryItem } from '@/types/github'
+import { LanguageItem } from '@/types/languages'
 
 // Define the shape of your store
 interface BaseStoreState {
@@ -19,6 +20,15 @@ interface BaseStoreState {
 
   allFilesContent: { [key: string]: string }
   setAllFilesContent: (contents: { [key: string]: string }) => void
+
+  repositoryLanguage: LanguageItem | null
+  setRepositoryLanguage: (language: LanguageItem) => void
+  resetRepositoryLanguage: () => void
+
+  translationLanguages: LanguageItem[]
+  setTranslationLanguages: (languages: LanguageItem[]) => void
+  addTranslationLanguage: (language: LanguageItem) => void
+  removeTranslationLanguage: (code: string) => void
 }
 
 const useBaseStore = create<BaseStoreState>((set, get) => ({
@@ -38,6 +48,15 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
 
   allFilesContent: {},
   setAllFilesContent: (contents) => set({ allFilesContent: contents }),
+
+  repositoryLanguage: null,
+  setRepositoryLanguage: (language) => set({ repositoryLanguage: language }),
+  resetRepositoryLanguage: () => set({ repositoryLanguage: null }),
+
+  translationLanguages: [],
+  setTranslationLanguages: (languages) => set({ translationLanguages: languages }),
+  addTranslationLanguage: (language) => set((state) => ({ translationLanguages: [...state.translationLanguages, language] })),
+  removeTranslationLanguage: (code) => set((state) => ({ translationLanguages: state.translationLanguages.filter((lang) => lang.code !== code) })),
 }))
 
 export default useBaseStore

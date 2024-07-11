@@ -1,17 +1,25 @@
 // ResumeAndProcess.tsx
 'use client';
 import useBaseStore from '@/stores/baseStore';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { RepositoryItem } from '@/types/github';
 import { openai } from '@/utils/ai-sdk/openaiProvider';
 import { generateText } from 'ai';
 import { promptgpt } from '@/utils/test/gh'
+import { json } from 'stream/consumers';
 
 const ResumeAndProcess: React.FC = () => {
-  const { selectedContents, setLoading, allFilesContent, setAllFilesContent, loading } = useBaseStore();
+  const { selectedContents, setLoading, allFilesContent, setAllFilesContent, loading, repositoryLanguage, translationLanguages } = useBaseStore();
   const [error, setError] = useState<string>('');
   const [allFilesContentCleaned, setAllFilesContentCleaned] = useState<{ [key: string]: string }>({});
   const [jsonResponse, setJsonResponse] = useState<any>(null);
+  const [auxTest, setAuxTest] = useState<any>(null);
+
+  useEffect(() => {
+    const text = `The original text is in ${repositoryLanguage?.name}. Please generate the JSON in ${repositoryLanguage?.name} with orthographic corrections. Then, ALSO create another JSONs into the following languages: ${translationLanguages.map((lang) => lang.name).join(', ')}. Label each JSON with the corresponding language code.`;
+    setAuxTest(text);
+  }, [repositoryLanguage, translationLanguages]);
+  
 
   const fetchAllFiles = async (item: RepositoryItem): Promise<{ [key: string]: string }> => {
     let contents: { [key: string]: string } = {};
@@ -75,6 +83,7 @@ const ResumeAndProcess: React.FC = () => {
         model: openai('gpt-3.5-turbo'),
         prompt: promptgpt + Object.values(allFilesContentCleaned).join(' '),
       });
+      console.log(promptgpt + Object.values(allFilesContentCleaned).join(' '))
       // Handle the text output as needed
       setJsonResponse(text);
     } catch (err: any) {
@@ -91,6 +100,10 @@ const ResumeAndProcess: React.FC = () => {
     }
     setAllFilesContentCleaned(cleaned);
   }, [allFilesContent]);
+
+  useEffect(() => {
+    console.log(JSON.stringify(jsonResponse, null, 2))
+  }, [jsonResponse]);
 
   return (
     <div className='flex flex-col w-full max-w-3xl'>
