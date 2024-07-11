@@ -1,15 +1,45 @@
+'use client'
 import React, { useState, ChangeEvent, useEffect } from 'react'
 import useBaseStore from '@/stores/baseStore'
-import { ring } from 'ldrs'
 import { checkSVG, crossSVG } from '@/constants/icons'
+import { RepositoryItem } from '@/types/github'
+import { ring } from 'ldrs'
 
-ring.register()
+// To-Delete
+import { ghjson } from '@/utils/test/gh'
 
-const GitHubRow = () => {
-  const { repoUrl, setRepoUrl, repoContents, setRepoContents } = useBaseStore()
-  const [loading, setLoading] = useState<boolean>(false)
+if (typeof window !== 'undefined') {
+  ring.register()
+}
+
+const fetchRepoContents = async (url: string): Promise<RepositoryItem[]> => {
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error('Failed to fetch repository contents')
+  }
+  const items: RepositoryItem[] = await response.json()
+
+  const allItems = await Promise.all(items.map(async (item) => {
+    if (item.type === 'dir') {
+      const subItems = await fetchRepoContents(item.url)
+      return { ...item, content: subItems }
+    } else {
+      return { ...item, content: null }
+    }
+  }))
+  
+  return allItems
+}
+
+const GitHubRow: React.FC = () => {
+  const { repoUrl, setRepoUrl, repoContents, setRepoContents, loading, setLoading } = useBaseStore()
   const [error, setError] = useState<string>('')
   const [debouncedRepoUrl, setDebouncedRepoUrl] = useState<string | null>(repoUrl || '')
+
+  // To-Delete
+  useEffect(() => {
+    setRepoContents(ghjson as RepositoryItem[])
+  }, [])
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -35,11 +65,9 @@ const GitHubRow = () => {
         if (!owner || !repo) {
           throw new Error('Invalid GitHub repository URL')
         }
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents`)
-        if (!response.ok) {
-          throw new Error('Invalid repository URL or repository not found')
-        }
-        setRepoContents(await response.json())
+        const repoContentsUrl = `https://api.github.com/repos/${owner}/${repo}/contents`
+        const contents = await fetchRepoContents(repoContentsUrl)
+        setRepoContents(contents)
       } catch (err: any) {
         setError(err.message)
       } finally {

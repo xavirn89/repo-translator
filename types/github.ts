@@ -6,9 +6,10 @@ export interface RepositoryItem {
   url: string
   html_url: string
   git_url: string
-  download_url: string
+  download_url: string | null
   type: string
   _links: RepositoryItemLinks
+  content: RepositoryItem[] | null
 }
 
 export interface RepositoryItemLinks {

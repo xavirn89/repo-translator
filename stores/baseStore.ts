@@ -10,6 +10,12 @@ interface BaseStoreState {
   repoContents: RepositoryItem[] | null;
   setRepoContents: (contents: RepositoryItem[]) => void;
   resetRepoContents: () => void;
+
+  selectedContents: RepositoryItem[];
+  setSelectedContents: (contents: RepositoryItem[]) => void;
+
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
 const useBaseStore = create<BaseStoreState>((set, get) => ({
@@ -20,6 +26,12 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
   repoContents: null,
   setRepoContents: (contents) => set({ repoContents: contents }),
   resetRepoContents: () => set({ repoContents: null }),
+
+  selectedContents: [],
+  setSelectedContents: (contents) => set({ selectedContents: contents }),
+
+  loading: false,
+  setLoading: (loading) => set({ loading }),
 }));
 
 export default useBaseStore;
