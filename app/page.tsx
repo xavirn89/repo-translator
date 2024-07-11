@@ -1,71 +1,95 @@
 'use client'
-import React, { useState, ChangeEvent } from 'react'
-import { RepositoryItem, RepositoryItemLinks } from '@/types/github'
+import React, { useState, ChangeEvent, useEffect } from 'react'
+import { RepositoryItem } from '@/types/github'
 import useBaseStore from '@/stores/baseStore'
+import Header from '@/sections/Header'
+import Footer from '@/sections/Footer'
+import GitHubRow from '@/components/GitHubRow'
 
 const Home: React.FC = () => {
   const { repoUrl, setRepoUrl, repoContents, setRepoContents } = useBaseStore();
   const [error, setError] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedItems, setSelectedItems] = useState<RepositoryItem[]>([]);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm);
+  const [loading, setLoading] = useState<boolean>(false); // Estado de carga
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRepoUrl(event.target.value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+
+
+
+  
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
   };
 
-  const handleFetchFiles = async () => {
-    if (!repoUrl) {
-      setError('Please enter a GitHub repository URL');
-      return;
-    }
-
-    try {
-      setError('');
-      const [owner, repo] = repoUrl.split('/').slice(-2);
-      if (!owner || !repo) {
-        throw new Error('Invalid GitHub repository URL');
-      }
-      const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents`);
-      if (!response.ok) {
-        throw new Error('Invalid repository URL or repository not found');
-      }
-      setRepoContents(await response.json());
-    } catch (err: any) {
-      setError(err.message);
-    }
+  const handleSelectItem = (item: RepositoryItem) => {
+    setSelectedItems([...selectedItems, item]);
   };
+
+  const handleRemoveItem = (item: RepositoryItem) => {
+    setSelectedItems(selectedItems.filter(selected => selected.sha !== item.sha));
+  };
+
+  const filteredContents = repoContents?.filter(content => 
+    content.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) &&
+    !selectedItems.some(selected => selected.sha === content.sha)
+  );
+
+
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-4">
-      <h1 className="text-3xl font-bold mb-6">Home</h1>
-      <div className="w-full max-w-md">
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+      <Header />
+      <div className='flex flex-col w-full items-center'>
+        <GitHubRow />
+      </div>
+      
+
+      {repoContents && !loading && (
+      <div className='flex'>
         <input
           type="text"
-          value={repoUrl || ''}
-          onChange={handleInputChange}
-          placeholder="Enter GitHub repository URL"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search files"
           className="w-full p-2 mb-4 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button
-          onClick={handleFetchFiles}
-          className="w-full p-2 mb-4 rounded bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Fetch Files
-        </button>
-        {error && <p className="text-red-500">{error}</p>}
-        <ul className="space-y-2">
-          {repoContents && repoContents.map((repoContent) => (
+        <ul className="space-y-2 mb-4">
+          {debouncedSearchTerm && filteredContents?.map((repoContent) => (
             <li key={repoContent.sha}>
-              <a
-                href={repoContent.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-2 rounded bg-gray-800 hover:bg-gray-700"
+              <button
+                onClick={() => handleSelectItem(repoContent)}
+                className="block w-full text-left p-2 rounded bg-gray-800 hover:bg-slate-700 transform transition duration-200"
               >
                 {repoContent.name}
-              </a>
+              </button>
             </li>
           ))}
         </ul>
+        <div className="flex flex-wrap space-x-2">
+          {selectedItems.map((item) => (
+            <div
+              key={item.sha}
+              onClick={() => handleRemoveItem(item)}
+              className="flex items-center p-2 mb-2 bg-gray-700 rounded cursor-pointer transform hover:scale-105 hover:bg-red-700 transition duration-200"
+            >
+              <span>{item.name}</span>
+            </div>
+          ))}
+        </div>
       </div>
+      )}
+      <Footer />
     </div>
   );
 };
