@@ -2,6 +2,7 @@ import Header from '@/sections/Header'
 import Footer from '@/sections/Footer'
 import GitHubRow from '@/components/GitHubRow'
 import IncludedItems from '@/components/IncludedItems'
+import ResumeAndProcess from '@/components/ResumeAndProcess';
 
 const Home: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const Home: React.FC = () => {
       <div className='flex flex-col w-full items-center'>
         <GitHubRow />
         <IncludedItems />
+        <ResumeAndProcess />
       </div>
       <Footer />
     </div>

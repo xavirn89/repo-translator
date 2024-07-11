@@ -7,6 +7,7 @@ import { ring } from 'ldrs'
 
 // To-Delete
 import { ghjson } from '@/utils/test/gh'
+// ---------
 
 if (typeof window !== 'undefined') {
   ring.register()
@@ -40,6 +41,10 @@ const GitHubRow: React.FC = () => {
   useEffect(() => {
     setRepoContents(ghjson as RepositoryItem[])
   }, [])
+  useEffect(() => {
+    //console.log(JSON.stringify(repoContents, null, 2))
+  }, [repoContents])
+  // ---------
 
   useEffect(() => {
     const handler = setTimeout(() => {
