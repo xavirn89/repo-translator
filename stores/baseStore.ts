@@ -14,6 +14,8 @@ interface BaseStoreState {
 
   selectedContents: RepositoryItem[]
   setSelectedContents: (contents: RepositoryItem[]) => void
+  addSelectedContent: (content: RepositoryItem) => void
+  deleteSelectedContent: (content: RepositoryItem) => void
 
   loading: boolean
   setLoading: (loading: boolean) => void
@@ -42,6 +44,8 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
 
   selectedContents: [],
   setSelectedContents: (contents) => set({ selectedContents: contents }),
+  addSelectedContent: (content) => set((state) => ({ selectedContents: [...state.selectedContents, content] })),
+  deleteSelectedContent: (content) => set((state) => ({ selectedContents: state.selectedContents.filter((selected) => selected.sha !== content.sha) })),
 
   loading: false,
   setLoading: (loading) => set({ loading }),

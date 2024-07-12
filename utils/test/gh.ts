@@ -862,10 +862,7 @@ export const ghjson = [
 
 
 export const promptgpt = `
-I have several component files and I need to extract all plain text strings that will be displayed on the webpage for the user. 
-I want these strings organized in a nested JSON format, with each component having its own section. 
-
-The JSON should look like this example:
+I have several React components files and I need to extract all plain text strings that will be displayed on the webpage for the user. I want these strings organized in a nested JSON format, with each component having its own section. The JSON should look like this example:
 {
   'ComponentName': {
     'MEANINGFUL_TEXT_VARIABLE_NAME': 'Displayed Text',
@@ -873,9 +870,9 @@ The JSON should look like this example:
   },
   ...
 }
-
 Please note the following:
 1. Use meaningful and descriptive names for the text variable names based on the context where the text appears in the component.
 2. Only include components that contain displayable text strings. If a component does not contain displayable text strings, do not include it in the JSON.
 3. Ensure that each text variable name is relevant to its usage in the component.
+4. Answer me only the JSON, dont tell me how you did it or anything else.
 `;

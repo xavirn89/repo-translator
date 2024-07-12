@@ -1,4 +1,3 @@
-// ResumeAndProcess.tsx
 'use client';
 import useBaseStore from '@/stores/baseStore';
 import React, { use, useEffect, useState } from 'react';
@@ -6,19 +5,14 @@ import { RepositoryItem } from '@/types/github';
 import { openai } from '@/utils/ai-sdk/openaiProvider';
 import { generateText } from 'ai';
 import { promptgpt } from '@/utils/test/gh'
-import { json } from 'stream/consumers';
 
 const ResumeAndProcess: React.FC = () => {
   const { selectedContents, setLoading, allFilesContent, setAllFilesContent, loading, repositoryLanguage, translationLanguages } = useBaseStore();
   const [error, setError] = useState<string>('');
   const [allFilesContentCleaned, setAllFilesContentCleaned] = useState<{ [key: string]: string }>({});
   const [jsonResponse, setJsonResponse] = useState<any>(null);
-  const [auxTest, setAuxTest] = useState<any>(null);
 
-  useEffect(() => {
-    const text = `The original text is in ${repositoryLanguage?.name}. Please generate the JSON in ${repositoryLanguage?.name} with orthographic corrections. Then, ALSO create another JSONs into the following languages: ${translationLanguages.map((lang) => lang.name).join(', ')}. Label each JSON with the corresponding language code.`;
-    setAuxTest(text);
-  }, [repositoryLanguage, translationLanguages]);
+  const promptFinalLine = `5. The language of the repository is ${repositoryLanguage?.name}, If you find any orthographic or grammatical errors, correct while you create the JSON.`
   
 
   const fetchAllFiles = async (item: RepositoryItem): Promise<{ [key: string]: string }> => {
@@ -75,52 +69,41 @@ const ResumeAndProcess: React.FC = () => {
     }
   };
 
-  const handleGenerateText = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const { text } = await generateText({
-        model: openai('gpt-3.5-turbo'),
-        prompt: promptgpt + Object.values(allFilesContentCleaned).join(' '),
-      });
-      console.log(promptgpt + Object.values(allFilesContentCleaned).join(' '))
-      // Handle the text output as needed
-      setJsonResponse(text);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    if (!allFilesContent) return;
+
     const cleaned: { [key: string]: string } = {};
     for (const [key, value] of Object.entries(allFilesContent)) {
       cleaned[key] = value.replace(/\s+/g, ' ');
     }
-    setAllFilesContentCleaned(cleaned);
-  }, [allFilesContent]);
 
-  useEffect(() => {
-    console.log(JSON.stringify(jsonResponse, null, 2))
-  }, [jsonResponse]);
+    // const createPromptAndGenerateJSON = async (cleaned: { [key: string]: string }) => {
+    //   try {
+    //     const { text } = await generateText({
+    //       model: openai('gpt-4-turbo'),
+    //       prompt: promptgpt + promptFinalLine + Object.values(cleaned).join(' '),
+    //     });
+    //     setJsonResponse(text);
+    //   } catch (err: any) {
+    //     setError(err.message);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+
+    // createPromptAndGenerateJSON(cleaned);
+  }, [allFilesContent]);
 
   return (
     <div className='flex flex-col w-full max-w-3xl'>
       <button 
-        className='p-2 rounded bg-blue-500 text-white'
+        className='p-2 rounded bg-green-500 text-white mt-2'
         onClick={handleResumeClick}
         disabled={loading}
       >
         {loading ? 'Loading...' : 'Resume'}
       </button>
-      <button 
-        className='p-2 rounded bg-green-500 text-white mt-2'
-        onClick={handleGenerateText}
-        disabled={loading}
-      >
-        {loading ? 'Generating...' : 'Generate Text'}
-      </button>
+
       {error && <p className="text-red-500 mt-2">{error}</p>}
       {jsonResponse && <pre className='text-white mt-2'>{jsonResponse}</pre>}
     </div>
