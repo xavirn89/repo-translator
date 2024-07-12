@@ -5,7 +5,7 @@ import { get } from 'http'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
 const IncludedItems = () => {
-  const { repoContents, loading, selectedContents, addSelectedContent, deleteSelectedContent } = useBaseStore()
+  const { repoContents, loading, selectedContents, addSelectedContent, deleteSelectedContent, repoUrl } = useBaseStore()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm)
   const [filteredContents, setFilteredContents] = useState<RepositoryItem[] | null>(null)
@@ -59,13 +59,13 @@ const IncludedItems = () => {
   }, [debouncedSearchTerm, selectedContents, repoContents])
 
   function getItemUrl(item: RepositoryItem) {
-    //from item._link.html = "html": "https://github.com/xavirn89/bentogridgenerator/blob/main/public/favicon/android-chrome-192x192.png"
-    //i want to return public/favicon/android-chrome-192x192.png
+    if (!repoUrl) return ''
 
     const url = item._links.html
-    const urlParts = url.split('/')
-    const urlPartsLength = urlParts.length
-    return urlParts.slice(urlPartsLength - 2).join('/')
+    const url2 = url.replace(repoUrl, '')
+    const url3 = url2.replace('/blob/main/', '')
+    const url4 = url3.replace('/tree/main/', '')
+    return url4
   }
 
   return (
@@ -95,14 +95,14 @@ const IncludedItems = () => {
           )}
         </div>
       )}
-      <div className="flex flex-wrap space-x-2">
-        {selectedContents.map((item) => (
+      <div className="flex flex-wrap gap-2">
+        {repoUrl && selectedContents.map((item) => (
           <div
             key={item.sha}
             onClick={() => handleRemoveItem(item)}
-            className="flex items-center p-2 mb-2 bg-gray-700 rounded cursor-pointer transform hover:scale-105 hover:bg-red-500/50 transition duration-200"
+            className="flex items-center p-2 bg-gray-700 rounded cursor-pointer transform hover:scale-105 hover:bg-red-500/50 transition duration-200"
           >
-            <span>{getItemUrl(item)}</span>
+            <span className='text-sm'>{getItemUrl(item)}</span>
           </div>
         ))}
       </div>

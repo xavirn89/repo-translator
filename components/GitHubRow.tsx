@@ -99,6 +99,7 @@ const GitHubRow: React.FC = () => {
   // To-Delete
   useEffect(() => {
     setRepoContents(ghjson as RepositoryItem[])
+    setRepoUrl('https://github.com/xavirn89/bentogridgenerator')
   }, [])
   useEffect(() => {
     //console.log(JSON.stringify(repoContents, null, 2))
