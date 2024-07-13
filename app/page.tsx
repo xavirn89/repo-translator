@@ -4,6 +4,7 @@ import GitHubRow from '@/components/GitHubRow'
 import IncludedItems from '@/components/IncludedItems'
 import BaseLanguageSelector from '@/components/BaseLanguageSelector';
 import ResumeAndProcess from '@/components/ResumeAndProcess';
+import JsonPhase1 from '@/components/JsonPhase1';
 
 const Home: React.FC = () => {
   return (
@@ -12,10 +13,16 @@ const Home: React.FC = () => {
         <Header />
         <div className='flex w-full h-full'>
           <div className='w-1/4'><GitHubRow /></div>
-          <div className='w-1/4'><IncludedItems /></div>
-          <div className='w-2/4'>
-            <div className='flex flex-col w-full'>
+          <div className='w-1/4'>
+            <div className='flex flex-col w-full gap-4'>
+              <IncludedItems />
               <BaseLanguageSelector />
+              <ResumeAndProcess />
+            </div>
+          </div>
+          <div className='w-2/4'>
+            <div className='flex flex-col w-full gap 4'>
+              <JsonPhase1 />
             </div>
           </div>
         </div>

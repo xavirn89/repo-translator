@@ -59,10 +59,10 @@ const BaseLanguageSelector: React.FC = () => {
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           placeholder="Search primary language"
-          className="p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 h-11 w-full"
         />
         {showLanguageList && (
-          <ul className="bg-gray-800 border border-gray-700 rounded shadow-lg z-10 max-h-60 overflow-auto w-full">
+          <ul className="absolute top-10 w-full bg-gray-800 border border-gray-700 rounded shadow-lg z-10 max-h-60 overflow-auto">
             {filteredLanguagesPrimary.map((lang) => (
               <li key={lang.code} onMouseDown={(e) => e.preventDefault()} onClick={() => handleLanguageSelectPrimary(lang)} className="p-2 hover:bg-gray-700 cursor-pointer flex items-center">
                 <span className={`fi fi-${lang.code} mr-2`}></span> {lang.name}

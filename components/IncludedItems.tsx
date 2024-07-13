@@ -80,7 +80,7 @@ const IncludedItems = () => {
             className="p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 h-11 w-full"
           />
           {debouncedSearchTerm && filteredContents && filteredContents.length > 0 && (
-            <ul className="bg-gray-800 border border-gray-700 rounded shadow-lg z-10">
+            <ul className="absolute top-12 w-full bg-gray-800 border border-gray-700 rounded shadow-lg z-10">
               {filteredContents.map((repoContent) => (
                 <li key={repoContent.sha}>
                   <button

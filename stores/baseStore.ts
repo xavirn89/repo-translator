@@ -31,6 +31,10 @@ interface BaseStoreState {
   setTranslationLanguages: (languages: LanguageItem[]) => void
   addTranslationLanguage: (language: LanguageItem) => void
   removeTranslationLanguage: (code: string) => void
+
+  phase1Response: string | null
+  setPhase1Response: (response: string) => void
+  resetPhase1Response: () => void
 }
 
 const useBaseStore = create<BaseStoreState>((set, get) => ({
@@ -61,6 +65,10 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
   setTranslationLanguages: (languages) => set({ translationLanguages: languages }),
   addTranslationLanguage: (language) => set((state) => ({ translationLanguages: [...state.translationLanguages, language] })),
   removeTranslationLanguage: (code) => set((state) => ({ translationLanguages: state.translationLanguages.filter((lang) => lang.code !== code) })),
+
+  phase1Response: null,
+  setPhase1Response: (response) => set({ phase1Response: response }),
+  resetPhase1Response: () => set({ phase1Response: null }),
 }))
 
 export default useBaseStore
