@@ -69,7 +69,7 @@ const IncludedItems = () => {
   }
 
   return (
-    <div className='flex flex-col w-full gap-2 p-6 border-r border-white h-full'>
+    <div className='flex flex-col w-full gap-2 p-6 border-r h-full'>
       {repoContents && !loading && (
         <div className='relative flex flex-col w-full gap-2'>
           <input
