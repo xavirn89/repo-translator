@@ -4,9 +4,9 @@ import useBaseStore from '@/stores/baseStore'
 import { RepositoryItem } from '@/types/github'
 import { ring } from 'ldrs'
 
-// To-Delete
-import { ghjson } from '@/utils/test/gh'
-// ---------
+// // To-Delete
+// import { ghjson } from '@/utils/test/gh'
+// // ---------
 
 if (typeof window !== 'undefined') {
   ring.register()
@@ -96,15 +96,15 @@ const GitHubRow: React.FC = () => {
   const [debouncedRepoUrl, setDebouncedRepoUrl] = useState<string | null>(repoUrl || '')
   const [loadingComponent, setLoadingComponent] = useState<boolean>(false)
 
-  // To-Delete
-  useEffect(() => {
-    setRepoContents(ghjson as RepositoryItem[])
-    setRepoUrl('https://github.com/xavirn89/bentogridgenerator')
-  }, [])
-  useEffect(() => {
-    //console.log(JSON.stringify(repoContents, null, 2))
-  }, [repoContents])
-  // ---------
+  // // To-Delete
+  // useEffect(() => {
+  //   setRepoContents(ghjson as RepositoryItem[])
+  //   setRepoUrl('https://github.com/xavirn89/bentogridgenerator')
+  // }, [])
+  // useEffect(() => {
+  //   //console.log(JSON.stringify(repoContents, null, 2))
+  // }, [repoContents])
+  // // ---------
 
   useEffect(() => {
     const handler = setTimeout(() => {
