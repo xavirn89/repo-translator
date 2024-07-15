@@ -35,6 +35,11 @@ interface BaseStoreState {
   phase1Response: string | null
   setPhase1Response: (response: string) => void
   resetPhase1Response: () => void
+
+  phase2Response: string[]
+  setPhase2Response: (response: string[]) => void
+  addPhase2Response: (response: string) => void
+  removePhase2Response: (response: string) => void
 }
 
 const useBaseStore = create<BaseStoreState>((set, get) => ({
@@ -69,6 +74,11 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
   phase1Response: null,
   setPhase1Response: (response) => set({ phase1Response: response }),
   resetPhase1Response: () => set({ phase1Response: null }),
+
+  phase2Response: [],
+  setPhase2Response: (response) => set({ phase2Response: response }),
+  addPhase2Response: (response) => set((state) => ({ phase2Response: [...state.phase2Response, response] })),
+  removePhase2Response: (response) => set((state) => ({ phase2Response: state.phase2Response.filter((res) => res !== response) })),
 }))
 
 export default useBaseStore

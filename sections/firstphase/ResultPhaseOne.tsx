@@ -6,9 +6,9 @@ const ResultPhaseOne = () => {
   const { phase1Response } = useBaseStore()
   return (
     <div className='flex flex-col w-full gap-2 p-6 h-full'>
-      <textarea className='text-white h-full bg-transparent' value={phase1Response ?? ''}/>
+      <textarea className='text-white h-full bg-transparent' value={phase1Response ?? ''} onChange={() => {}} />
     </div>
-    )
+  )
 }
 
 export default ResultPhaseOne

@@ -1,3 +1,5 @@
+import { LanguageItem } from "@/types/languages";
+
 export const ghjson = [
   {
     "name": ".eslintrc.json",
@@ -876,3 +878,15 @@ Please note the following:
 3. Ensure that each text variable name is relevant to its usage in the component.
 4. Answer me only the JSON, dont tell me how you did it or anything else.
 `;
+
+export const promptgpt2 = (repositoryLanguage: LanguageItem, translationLanguages: LanguageItem[], phase1Response: string | null) => {
+  return `
+  I have this JSON object that contains all the text strings from my webpage in ${repositoryLanguage.name}. I want that you create copies of the JSON object in ${translationLanguages.map((language) => language.name).join(', ')} with the text strings translated to each language. The JSON objects should look like this example:
+  ${phase1Response}
+  Please note the following:
+  1. Translate only the text strings, do not translate the variable names.
+  2. Ensure that the translations are accurate and contextually correct.
+  3. Answer me only the JSON objects, dont tell me how you did it or anything else.
+  4. Separate each JSON object with triple backticks to ensure clear distinction between different language translations.
+  `;
+}
