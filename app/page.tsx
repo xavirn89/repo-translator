@@ -11,6 +11,8 @@ import LanguagesSelector from '@/sections/secondphase/LanguagesSelector';
 import ResultPhaseTwo from '@/sections/secondphase/ResultPhaseTwo';
 import Background from '@/components/Background';
 import RepoInputBanner from '@/sections/phase-one/RepoInputBanner';
+import RepoContents from '@/sections/phase-one/RepoContents';
+import TranslationOptions from '@/sections/phase-two/TranslationOptions';
 
 const Home: React.FC = () => {
   return (
@@ -20,9 +22,17 @@ const Home: React.FC = () => {
         <Header />
 
 
-        <div className='flex flex-col flex-grow w-full'>
+        <div className='flex flex-col w-full h-full'>
           <RepoInput />
-          <RepoInputBanner />
+          <RepoInputBanner targetId="repo-loaded" />
+        </div>
+
+        <div className='flex flex-col w-full h-full' id="repo-loaded">
+          <RepoContents targetId="base-translation-loading" />
+        </div>
+
+        <div className='flex flex-col w-full h-full' id="base-translation-loading">
+          <TranslationOptions />
         </div>
 
         {/* <div className='flex w-full'>

@@ -8,8 +8,19 @@ if (typeof window !== 'undefined') {
   ring.register()
 }
 
-const RepoInputBanner = () => {
+interface InProps {
+  targetId: string
+}
+
+const RepoInputBanner = ({ targetId }: InProps) => {
   const { loading, repoContents } = useBaseStore()
+
+  useEffect(() => {
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [loading, repoContents])
 
   if (repoContents) return null
 
