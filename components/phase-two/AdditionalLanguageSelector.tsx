@@ -4,10 +4,10 @@ import { LanguageItem } from '@/types/languages';
 import { promptgpt2 } from '@/utils/test/gh';
 import { openai } from '@/utils/ai-sdk/openaiProvider';
 import { generateText } from 'ai';
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 interface InProps {
-  targetId: string
+  targetId: string;
 }
 
 const AdditionalLanguageSelector = ({ targetId }: InProps) => {
@@ -19,7 +19,7 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
     phase1Response,
     phase2Response,
     setPhase2Response,
-    setLoading
+    setLoading,
   } = useBaseStore();
 
   const [searchTermAdditional, setSearchTermAdditional] = useState('');
@@ -29,17 +29,19 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
   useEffect(() => {
     if (searchTermAdditional) {
       setFilteredLanguagesAdditional(
-        languages.filter((lang) =>
-          lang.name.toLowerCase().includes(searchTermAdditional.toLowerCase()) &&
-          lang.code !== repositoryLanguage?.code &&
-          !translationLanguages.some((additionalLang) => additionalLang.code === lang.code)
+        languages.filter(
+          (lang) =>
+            lang.name.toLowerCase().includes(searchTermAdditional.toLowerCase()) &&
+            lang.code !== repositoryLanguage?.code &&
+            !translationLanguages.some((additionalLang) => additionalLang.code === lang.code)
         )
       );
     } else {
       setFilteredLanguagesAdditional(
-        languages.filter((lang) =>
-          lang.code !== repositoryLanguage?.code &&
-          !translationLanguages.some((additionalLang) => additionalLang.code === lang.code)
+        languages.filter(
+          (lang) =>
+            lang.code !== repositoryLanguage?.code &&
+            !translationLanguages.some((additionalLang) => additionalLang.code === lang.code)
         )
       );
     }
@@ -61,12 +63,10 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
   };
 
   const handleGenerateTranslations = async () => {
-    console.log(repositoryLanguage, translationLanguages, phase1Response);
     if (!repositoryLanguage || translationLanguages.length === 0 || !phase1Response) return;
-  
+
     setLoading(true);
-    console.log('Generating translations...');
-  
+
     try {
       const textPrompt = promptgpt2(repositoryLanguage, translationLanguages, phase1Response);
       console.log(textPrompt);
@@ -74,14 +74,27 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
         model: openai('gpt-4-turbo'),
         prompt: textPrompt,
       });
-      console.log("--------------------------------------------------")
-      console.log(JSON.stringify(text, null, 2));
-  
-      // Extract JSON strings
-      const jsonStrings = text.split(/```/g).filter((str) => str.trim().startsWith('{') && str.trim().endsWith('}'));
-      if (jsonStrings) {
+
+      console.log("RETURN AI:", text);
+
+      let jsonStrings = text.split(/```/g).filter((str) => str.trim().startsWith('{') && str.trim().endsWith('}'));
+      console.log("FIRST TRY:", jsonStrings);
+      if (jsonStrings.length === 0) {
+        jsonStrings = text.split(/```json\n/g).filter((str) => {
+          try {
+            JSON.parse(str.trim());
+            return true;
+          } catch {
+            return false;
+          }
+        });
+        console.log("SECOND TRY:", jsonStrings);
+      }
+      console.log("NUMBER OF JSON STRINGS:", jsonStrings.length);
+      if (jsonStrings.length > 0) {
         const translationsData: string[] = jsonStrings.map((jsonString) => jsonString.trim());
         setPhase2Response(translationsData);
+
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -95,7 +108,7 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className='flex flex-col w-full gap-4'>
       <p className='text-xl'>Añadir lenguajes a traducir:</p>
@@ -104,7 +117,7 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
         type="text"
         value={searchTermAdditional}
         onChange={handleInputChangeAdditional}
-        placeholder="Search additional languages"
+        placeholder="Selecciona los lenguajes adicionales"
         className="p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
@@ -132,10 +145,10 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
       </div>
 
       <button className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600" onClick={handleGenerateTranslations}>
-        Generate Translations
+        Generar Traducciones
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default AdditionalLanguageSelector
+export default AdditionalLanguageSelector;

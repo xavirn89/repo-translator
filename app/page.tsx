@@ -2,11 +2,11 @@
 import React from 'react';
 import Header from '@/sections/Header';
 import Footer from '@/sections/Footer';
-import RepoInput from '@/sections/phase-one/RepoInput';
+import RepoInput from '@/components/phase-one/RepoInput';
 import Background from '@/components/Background';
 import RepoInputBanner from '@/sections/phase-one/RepoInputBanner';
 import RepoContents from '@/sections/phase-one/RepoContents';
-import TranslationOptions from '@/sections/phase-two/TranslationOptions';
+import FirstResultAndTranslations from '@/sections/phase-two/FirstResultAndTranslations';
 import FinalResults from '@/sections/phase-two/FinalResults';
 import Testing from '@/components/Testing';
 
@@ -27,7 +27,7 @@ const Home: React.FC = () => {
         </div>
 
         <div className='flex flex-col w-full h-full' id="base-translation-loading">
-          <TranslationOptions targetId="final-results" />
+          <FirstResultAndTranslations targetId="final-results" />
         </div>
 
         <div className='flex flex-col w-full h-full' id="final-results">

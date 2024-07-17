@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 
-const PhaseOneInfo = () => {
+const Banner = () => {
   return (
-    <div className='flex w-full max-w-5xl justify-between items-center'>
+    <div className='flex w-full max-w-5xl justify-between items-center mt-20'>
       <div className='flex'>
         <ul>
           <li> ▸ Repository must be public</li>
@@ -43,4 +43,4 @@ const PhaseOneInfo = () => {
   )
 }
 
-export default PhaseOneInfo
+export default Banner

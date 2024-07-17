@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { ring } from 'ldrs'
 import useBaseStore from '@/stores/baseStore'
-import AdditionalLanguageSelector from '@/sections/phase-two/AdditionalLanguageSelector'
+import AdditionalLanguageSelector from '@/components/phase-two/AdditionalLanguageSelector'
 if (typeof window !== 'undefined') {
   ring.register()
 }
@@ -11,7 +11,7 @@ interface InProps {
   targetId: string
 }
 
-const TranslationOptions = ({ targetId }: InProps) => {
+const FirstResultAndTranslations = ({ targetId }: InProps) => {
   const {loading, phase1Response, repoContents, repositoryLanguage} = useBaseStore()
 
   useEffect(() => {
@@ -49,4 +49,4 @@ const TranslationOptions = ({ targetId }: InProps) => {
   return null
 }
 
-export default TranslationOptions
+export default FirstResultAndTranslations

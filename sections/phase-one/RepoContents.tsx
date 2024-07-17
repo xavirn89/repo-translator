@@ -1,7 +1,7 @@
 'use client'
 import useBaseStore from '@/stores/baseStore'
 import SearchAndSelectData from '@/sections/phase-one/SearchAndSelectData'
-import RecursiveRepoContents from '@/components/RecursiveRepoContents'
+import RecursiveRepoContents from '@/sections/phase-one/RecursiveRepoContents'
 import SelectOriginalLanguage from '@/sections/phase-one/SelectOriginalLanguage'
 import ButtonProcessPhaseOne from '@/sections/phase-one/ButtonProcessPhaseOne'
 

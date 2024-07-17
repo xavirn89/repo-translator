@@ -11,14 +11,20 @@
   "dependencies": {
     "@ai-sdk/openai": "^0.0.36",
     "ai": "^3.2.22",
+    "file-saver": "^2.0.5",
     "flag-icons": "^7.2.3",
+    "jszi": "^0.0.1-security.0",
+    "jszip": "^3.10.1",
     "ldrs": "^1.0.2",
+    "lodash": "^4.17.21",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.7",
+    "@types/lodash": "^4.17.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

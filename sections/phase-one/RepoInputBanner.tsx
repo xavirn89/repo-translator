@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import PhaseOneInfo from '@/components/PhaseOneInfo'
+import Banner from '@/components/phase-one/Banner'
 import useBaseStore from '@/stores/baseStore'
 import { ring } from 'ldrs'
 
@@ -26,7 +26,7 @@ const RepoInputBanner = ({ targetId }: InProps) => {
 
   return (
     <div className='flex flex-grow w-full justify-center items-center'>
-      {!loading && !repoContents && <PhaseOneInfo />}
+      {!loading && !repoContents && <Banner />}
 
       {loading && !repoContents && <l-ring size="100" stroke="15" bg-opacity="0" speed="2" color="white" />}
     </div>
