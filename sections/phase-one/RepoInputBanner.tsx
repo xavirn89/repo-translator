@@ -1,34 +1,55 @@
 'use client'
-import { useEffect } from 'react'
-import Banner from '@/components/phase-one/Banner'
-import useBaseStore from '@/stores/baseStore'
 import { ring } from 'ldrs'
+import useStateStore from '@/stores/stateStore'
+import Image from 'next/image'
+import useBaseStore from '@/stores/baseStore'
+import { AppStates } from '@/types/global'
 
-if (typeof window !== 'undefined') {
-  ring.register()
-}
+const RepoInputBanner = () => {
+  const { loading } = useBaseStore()
+  const { currentState } = useStateStore()
 
-interface InProps {
-  targetId: string
-}
+  if (currentState !== AppStates.HOME || loading) return null
 
-const RepoInputBanner = ({ targetId }: InProps) => {
-  const { loading, repoContents } = useBaseStore()
-
-  useEffect(() => {
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [loading, repoContents])
-
-  if (repoContents) return null
-
-  return (
+  if (currentState === AppStates.HOME) return (
     <div className='flex flex-grow w-full justify-center items-center'>
-      {!loading && !repoContents && <Banner />}
+      <div className='flex w-full max-w-5xl justify-between items-center mt-20'>
+        <div className='flex'>
+          <ul>
+            <li> ▸ Repository must be public</li>
+            <li> ▸ Enter a valid URL</li>
+          </ul>
+        </div>
 
-      {loading && !repoContents && <l-ring size="100" stroke="15" bg-opacity="0" speed="2" color="white" />}
+        <div className='flex flex-col gap-3 items-center'>
+          <Image
+            priority
+            src={'/icons/githubwhite.png'}
+            width={100}
+            height={100}
+            alt="Follow us on Twitter"
+          />
+
+          <Image
+            priority
+            src={'/icons/vercelwhite.png'}
+            width={150}
+            height={100}
+            alt="Follow us on Twitter"
+            className='mb-2'
+          />
+
+          <Image
+            priority
+            src={'/icons/openaiwhite.png'}
+            width={150}
+            height={100}
+            alt="Follow us on Twitter"
+          />
+
+
+        </div>
+      </div>
     </div>
   )
 }

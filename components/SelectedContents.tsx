@@ -19,7 +19,6 @@ const SelectedContents = () => {
     deleteSelectedContent(item)
   }
 
-  console.log('selectedContents', selectedContents)
   return (
     <div className='flex w-full'>
       <div className="flex flex-wrap gap-2">

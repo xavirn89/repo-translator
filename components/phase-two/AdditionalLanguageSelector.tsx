@@ -5,12 +5,10 @@ import { promptgpt2 } from '@/utils/test/gh';
 import { openai } from '@/utils/ai-sdk/openaiProvider';
 import { generateText } from 'ai';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import useStateStore from '@/stores/stateStore';
 
-interface InProps {
-  targetId: string;
-}
 
-const AdditionalLanguageSelector = ({ targetId }: InProps) => {
+const AdditionalLanguageSelector = () => {
   const {
     repositoryLanguage,
     translationLanguages,
@@ -21,6 +19,7 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
     setPhase2Response,
     setLoading,
   } = useBaseStore();
+  const { nextState } = useStateStore();
 
   const [searchTermAdditional, setSearchTermAdditional] = useState('');
   const [filteredLanguagesAdditional, setFilteredLanguagesAdditional] = useState<LanguageItem[]>(languages);
@@ -94,11 +93,7 @@ const AdditionalLanguageSelector = ({ targetId }: InProps) => {
       if (jsonStrings.length > 0) {
         const translationsData: string[] = jsonStrings.map((jsonString) => jsonString.trim());
         setPhase2Response(translationsData);
-
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth' });
-        }
+        nextState();
       } else {
         setPhase2Response([]);
       }

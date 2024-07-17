@@ -7,19 +7,8 @@ if (typeof window !== 'undefined') {
   ring.register()
 }
 
-interface InProps {
-  targetId: string
-}
-
-const FirstResultAndTranslations = ({ targetId }: InProps) => {
+const BaseTranslation = () => {
   const {loading, phase1Response, repoContents, repositoryLanguage} = useBaseStore()
-
-  useEffect(() => {
-    const targetElement = document.getElementById("base-translation-done");
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [phase1Response])
 
   if (loading && repoContents && !phase1Response) return (
     <div className='flex flex-col w-full justify-center items-center mb-24'>
@@ -33,13 +22,18 @@ const FirstResultAndTranslations = ({ targetId }: InProps) => {
     <div className='flex flex-col w-full items-center mb-10 h-full'>
       <div className='flex w-full max-w-7xl justify-between gap-4 h-full'>
 
-        <div className='flex flex-col h-full w-2/3 gap-4' id="base-translation-done">
-          <p className='text-xl'>{repositoryLanguage?.code}.json</p>
-          <textarea className='text-white w-full h-[800px] bg-slate-500/25 rounded-2xl p-4 border border-slate-500/50' value={phase1Response ?? ''} onChange={() => {}} />
+        <div className='flex flex-col h-full w-2/3' id="base-translation-done">
+          {/* <p className='text-xl'>{repositoryLanguage?.code}.json</p> */}
+          <div className='flex'>
+            <div className='px-4 py-2 rounded-t-lg bg-gray-200 text-gray-800'>
+              {repositoryLanguage?.code}.json
+            </div>
+          </div>
+          <textarea className='text-white w-full h-[800px] bg-slate-500/25 rounded-se-2xl rounded-b-2xl p-4 border border-slate-500/50' value={phase1Response ?? ''} onChange={() => {}} />
         </div>
 
         <div className='flex flex-col w-1/3 gap-4'>
-          <AdditionalLanguageSelector targetId={targetId} />
+          <AdditionalLanguageSelector />
         </div>
         
       </div>
@@ -49,4 +43,4 @@ const FirstResultAndTranslations = ({ targetId }: InProps) => {
   return null
 }
 
-export default FirstResultAndTranslations
+export default BaseTranslation

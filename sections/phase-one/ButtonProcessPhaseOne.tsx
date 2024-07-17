@@ -4,22 +4,12 @@ import { openai } from '@/utils/ai-sdk/openaiProvider';
 import { generateText } from 'ai';
 import useBaseStore from '@/stores/baseStore';
 import { promptPhaseOne } from '@/utils/ai-sdk/prompts';
+import useStateStore from '@/stores/stateStore';
 
-interface InProps {
-  targetId: string
-}
 
-const ButtonProcessPhaseOne = ({ targetId }: InProps) => {
+const ButtonProcessPhaseOne = () => {
   const { selectedContents, setLoading, allFilesContent, setAllFilesContent, loading, repositoryLanguage, setPhase1Response } = useBaseStore();
-
-  const handleProcessPhaseOne = () => {
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    handleProcessSelectedContents();
-  }
+  const { nextState } = useStateStore();
 
   const fetchAllFiles = async (item: RepositoryItem): Promise<{ [key: string]: string }> => {
     let contents: { [key: string]: string } = {};
@@ -95,6 +85,7 @@ const ButtonProcessPhaseOne = ({ targetId }: InProps) => {
           text = text.slice(0, -3);
         }
         setPhase1Response(text);
+        nextState();
       } catch (err: any) {
         console.error(err);
         setLoading(false);
@@ -112,7 +103,7 @@ const ButtonProcessPhaseOne = ({ targetId }: InProps) => {
       </div>
 
       <div className='flex w-1/2 justify-center'>
-        <button className='w-52 py-2 bg-green-500 rounded text-white font-bold hover:bg-green-700 transition duration-200' onClick={handleProcessPhaseOne}>
+        <button className='w-52 py-2 bg-green-500 rounded text-white font-bold hover:bg-green-700 transition duration-200' onClick={handleProcessSelectedContents}>
           Generar Traducción
         </button>
       </div>

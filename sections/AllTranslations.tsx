@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-const FinalResults: React.FC = () => {
+const AllTranslations: React.FC = () => {
   const { loading, phase2Response, translationLanguages, repositoryLanguage, phase1Response } = useBaseStore();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [jsonCodes, setJsonCodes] = useState<string[]>([]);
@@ -118,4 +118,4 @@ const FinalResults: React.FC = () => {
   );
 };
 
-export default FinalResults;
+export default AllTranslations;
