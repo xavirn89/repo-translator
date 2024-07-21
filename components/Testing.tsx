@@ -10,7 +10,7 @@ const Testing = () => {
   const {setRepoUrl, setRepoContents, setPhase1Response, setPhase2Response, setRepositoryLanguage, setTranslationLanguages} = useBaseStore()
   const {currentState, goToState} = useStateStore()
   useEffect(() => {
-    setRepoUrl(text0)
+    // setRepoUrl(text0)
     // setRepoContents(ghjson)
     // const lang1 = {name: 'Spanish', code: 'es'}
     // setRepositoryLanguage(lang1)
@@ -24,12 +24,12 @@ const Testing = () => {
     // }
   }, [])
 
-  useEffect(() => {
-    if (currentState === AppStates.HOME) {
-      goToState(AppStates.REPOSITORY_CONTENTS)
-      setRepoContents(ghjson)
-    }
-  }, [currentState])
+  // useEffect(() => {
+  //   if (currentState === AppStates.HOME) {
+  //     goToState(AppStates.REPOSITORY_CONTENTS)
+  //     setRepoContents(ghjson)
+  //   }
+  // }, [currentState])
 
   return null
 }

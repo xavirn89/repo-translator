@@ -7,8 +7,9 @@ const Navbar = () => {
       <div className='flex w-full max-w-5xl justify-between pt-8'>
         <Image
           src="/icons/repotranslator.png"
-          width={200}
-          height={100}
+          width={150}
+          height={50}
+          className='w-auto h-auto'
           alt="Picture of the author"
         />
         <div className='flex gap-2'>

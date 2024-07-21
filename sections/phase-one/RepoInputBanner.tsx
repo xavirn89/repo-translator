@@ -14,10 +14,11 @@ const RepoInputBanner = () => {
   if (currentState === AppStates.HOME) return (
     <div className='flex flex-grow w-full justify-center items-center'>
       <div className='flex w-full max-w-5xl justify-between items-center mt-20'>
-        <div className='flex'>
+
+        <div className='flex items-center'>
           <ul>
-            <li> ▸ Repository must be public</li>
-            <li> ▸ Enter a valid URL</li>
+            <li> ▸ El repositorio debe ser público</li>
+            <li> ▸ Se debe introducir la URL completa del repositorio</li>
           </ul>
         </div>
 
@@ -25,25 +26,27 @@ const RepoInputBanner = () => {
           <Image
             priority
             src={'/icons/githubwhite.png'}
-            width={100}
-            height={100}
+            width={80}
+            height={80}
+            className='w-auto h-auto'
             alt="Follow us on Twitter"
           />
 
           <Image
             priority
             src={'/icons/vercelwhite.png'}
-            width={150}
-            height={100}
+            width={100}
+            height={50}
+            className='w-auto h-auto mb-2'
             alt="Follow us on Twitter"
-            className='mb-2'
           />
 
           <Image
             priority
             src={'/icons/openaiwhite.png'}
-            width={150}
-            height={100}
+            width={100}
+            height={0}
+            className='w-auto h-auto mb-2'
             alt="Follow us on Twitter"
           />
 
