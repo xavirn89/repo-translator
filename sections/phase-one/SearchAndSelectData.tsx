@@ -3,7 +3,6 @@ import InputSearchContents from '@/components/InputSearchContents'
 import SelectedContents from '@/components/SelectedContents'
 
 const SearchAndSelectData = () => {
-  
 
   return (
     <div className='relative flex flex-col w-full gap-2'>
@@ -19,11 +18,7 @@ const SearchAndSelectData = () => {
         <div className='w-1/2'>
           <SelectedContents />
         </div>
-      </div>
-
-        
-      
-      
+      </div>       
     </div>
   )
 }

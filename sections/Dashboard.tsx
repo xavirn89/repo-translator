@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import useStateStore from '@/stores/stateStore'
 import RepoContents from './phase-one/RepoContents'
 import { AppStates } from '@/types/global'
@@ -7,23 +7,15 @@ import BaseTranslation from '@/sections/BaseTranslation'
 import AllTranslations from '@/sections/AllTranslations'
 
 const Dashboard = () => {
-  const { currentState, prevState } = useStateStore()
+  const { currentState } = useStateStore()
 
-  const handleGoBack = () => {
-    prevState()
-  }
-
-  useEffect(() => {
-    console.log('State: ', currentState)
-  }, [currentState])
+  console.log('Current state----->  ', currentState)
 
   if (currentState === AppStates.HOME) return null
 
   return (
     <div className='flex flex-col w-full items-center py-8'>
       <div className='flex flex-col w-full max-w-7xl justify-between gap-4'>
-
-        
 
         {currentState === AppStates.REPOSITORY_CONTENTS && (
           <RepoContents />

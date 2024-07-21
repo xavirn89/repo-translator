@@ -8,7 +8,7 @@ import App from 'next/app'
 
 const Testing = () => {
   const {setRepoUrl, setRepoContents, setPhase1Response, setPhase2Response, setRepositoryLanguage, setTranslationLanguages} = useBaseStore()
-  const {currentState, nextState, goToState} = useStateStore()
+  const {currentState, goToState} = useStateStore()
   useEffect(() => {
     setRepoUrl(text0)
     // setRepoContents(ghjson)

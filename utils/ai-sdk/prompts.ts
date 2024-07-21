@@ -26,7 +26,7 @@ export const promptPhaseTwo = (repositoryLanguage: LanguageItem, translationLang
   Please note the following:
   1. Translate only the text strings, do not translate the variable names.
   2. Ensure that the translations are accurate and contextually correct.
-  3. Answer me only the JSON objects, dont tell me how you did it or anything else.
-  4. Separate each JSON object with triple backticks to ensure clear distinction between different language translations.
+  3. Separate each JSON object with triple backticks to ensure clear distinction between different language translations.
+  4. Answer me ONLY the JSON objects, dont tell me how you did it or starting or ending messages.
   `;
 }

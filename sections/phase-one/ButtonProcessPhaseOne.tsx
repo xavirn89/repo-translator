@@ -5,11 +5,12 @@ import { generateText } from 'ai';
 import useBaseStore from '@/stores/baseStore';
 import { promptPhaseOne } from '@/utils/ai-sdk/prompts';
 import useStateStore from '@/stores/stateStore';
+import { AppStates } from '@/types/global';
 
 
 const ButtonProcessPhaseOne = () => {
   const { selectedContents, setLoading, allFilesContent, setAllFilesContent, loading, repositoryLanguage, setPhase1Response } = useBaseStore();
-  const { nextState } = useStateStore();
+  const { goToState } = useStateStore();
 
   const fetchAllFiles = async (item: RepositoryItem): Promise<{ [key: string]: string }> => {
     let contents: { [key: string]: string } = {};
@@ -48,6 +49,7 @@ const ButtonProcessPhaseOne = () => {
   };
 
   const handleProcessSelectedContents = async () => {
+    console.log('Processing selected contents...');
     setLoading(true);
     let allContents: { [key: string]: string } = {};
 
@@ -85,7 +87,7 @@ const ButtonProcessPhaseOne = () => {
           text = text.slice(0, -3);
         }
         setPhase1Response(text);
-        nextState();
+        goToState(AppStates.BASE_TRANSLATION);
       } catch (err: any) {
         console.error(err);
         setLoading(false);

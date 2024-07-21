@@ -6,7 +6,7 @@ import { openai } from '@/utils/ai-sdk/openaiProvider';
 import { generateText } from 'ai';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import useStateStore from '@/stores/stateStore';
-
+import { AppStates } from '@/types/global';
 
 const AdditionalLanguageSelector = () => {
   const {
@@ -19,7 +19,7 @@ const AdditionalLanguageSelector = () => {
     setPhase2Response,
     setLoading,
   } = useBaseStore();
-  const { nextState } = useStateStore();
+  const { goToState } = useStateStore();
 
   const [searchTermAdditional, setSearchTermAdditional] = useState('');
   const [filteredLanguagesAdditional, setFilteredLanguagesAdditional] = useState<LanguageItem[]>(languages);
@@ -61,6 +61,22 @@ const AdditionalLanguageSelector = () => {
     removeTranslationLanguage(code);
   };
 
+  const extractJsonStrings = (text: string): string[] => {
+    // Try to match and extract JSON blocks from the text
+    const jsonBlocks = text.match(/```json\n({[\s\S]*?})\n```/g);
+    if (jsonBlocks) {
+      return jsonBlocks.map((block) => block.replace(/```json\n|```/g, '').trim());
+    }
+
+    // Fallback to simpler extraction
+    const simpleJsonBlocks = text.match(/({[\s\S]*?})/g);
+    if (simpleJsonBlocks) {
+      return simpleJsonBlocks.map((block) => block.trim());
+    }
+
+    return [];
+  };
+
   const handleGenerateTranslations = async () => {
     if (!repositoryLanguage || translationLanguages.length === 0 || !phase1Response) return;
 
@@ -76,24 +92,13 @@ const AdditionalLanguageSelector = () => {
 
       console.log("RETURN AI:", text);
 
-      let jsonStrings = text.split(/```/g).filter((str) => str.trim().startsWith('{') && str.trim().endsWith('}'));
-      console.log("FIRST TRY:", jsonStrings);
-      if (jsonStrings.length === 0) {
-        jsonStrings = text.split(/```json\n/g).filter((str) => {
-          try {
-            JSON.parse(str.trim());
-            return true;
-          } catch {
-            return false;
-          }
-        });
-        console.log("SECOND TRY:", jsonStrings);
-      }
-      console.log("NUMBER OF JSON STRINGS:", jsonStrings.length);
+      let jsonStrings = extractJsonStrings(text);
+      console.log("EXTRACTED JSON STRINGS:", jsonStrings);
+
       if (jsonStrings.length > 0) {
         const translationsData: string[] = jsonStrings.map((jsonString) => jsonString.trim());
         setPhase2Response(translationsData);
-        nextState();
+        goToState(AppStates.ALL_TRANSLATIONS);
       } else {
         setPhase2Response([]);
       }

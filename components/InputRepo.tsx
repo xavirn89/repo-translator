@@ -1,68 +1,53 @@
 'use client'
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import useBaseStore from '@/stores/baseStore';
-import { RepositoryItem } from '@/types/github';
 import debounce from 'lodash/debounce';
 import useStateStore from '@/stores/stateStore';
 import { AppStates } from '@/types/global';
-
-const fetchRepoContents = async (url: string): Promise<RepositoryItem[]> => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error('Failed to fetch repository contents');
-  }
-  const items: RepositoryItem[] = await response.json();
-
-  const fetchContents = items.map(async (item) => {
-    if (item.type === 'dir') {
-      const subItems = await fetchRepoContents(item.url);
-      return { ...item, content: subItems };
-    }
-    return { ...item, content: null };
-  });
-
-  return await Promise.all(fetchContents);
-};
+import useHandleBack from '@/hooks/useHandleBack';
+import { fetchRepoContents } from '@/utils/github';
 
 const InputRepo: React.FC = () => {
   const { repoUrl, setRepoUrl, setRepoContents, setLoading } = useBaseStore();
-  const { currentState, nextState, prevState } = useStateStore();
+  const { currentState, goToState } = useStateStore();
   const [error, setError] = useState<string>('');
-
-  const debouncedFetchFiles = useCallback(
-    debounce(async (url: string) => {
-      // try {
-      //   setLoading(true);
-      //   setError('');
-      //   const [owner, repo] = url.split('/').slice(-2);
-      //   if (!owner || !repo) {
-      //     throw new Error('Invalid GitHub repository URL');
-      //   }
-      //   const repoContentsUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
-      //   const contents = await fetchRepoContents(repoContentsUrl);
-      //   setRepoContents(contents);
-      //   nextState();
-      // } catch (err: any) {
-      //   setError(err.message);
-      // } finally {
-      //   setLoading(false);
-      // }
-    }, 1000),
-    [setRepoContents, setLoading, nextState]
-  );
+  const { goBack } = useHandleBack();
 
   useEffect(() => {
-    if (repoUrl) {
-      debouncedFetchFiles(repoUrl);
-    }
-  }, [repoUrl, debouncedFetchFiles]);
+    if (!repoUrl) return;
+
+    const debouncedFetchFiles = debounce(async (url: string) => {
+      try {
+        setLoading(true);
+        setError('');
+        const [owner, repo] = url.split('/').slice(-2);
+        if (!owner || !repo) {
+          throw new Error('Invalid GitHub repository URL');
+        }
+        const repoContentsUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
+        const contents = await fetchRepoContents(repoContentsUrl);
+        setRepoContents(contents);
+        goToState(AppStates.REPOSITORY_CONTENTS);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }, 1000);
+
+    debouncedFetchFiles(repoUrl);
+
+    return () => {
+      debouncedFetchFiles.cancel(); 
+    };
+  }, [repoUrl, setRepoContents, setLoading, goToState]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRepoUrl(event.target.value);
   };
 
   const handleGoBack = () => {
-    prevState();
+    goBack();
   };
 
   return (
@@ -101,11 +86,7 @@ const InputRepo: React.FC = () => {
           />
         </div>
 
-        <div className='w-1/3'>
-        </div>
-        
       </div>
-
 
       {error && <div className="text-red-500">{error}</div>}
     </div>

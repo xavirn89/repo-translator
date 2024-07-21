@@ -22,6 +22,7 @@ interface BaseStoreState {
 
   allFilesContent: { [key: string]: string }
   setAllFilesContent: (contents: { [key: string]: string }) => void
+  resetAllFilesContent: () => void
 
   repositoryLanguage: LanguageItem | null
   setRepositoryLanguage: (language: LanguageItem) => void
@@ -61,6 +62,7 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
 
   allFilesContent: {},
   setAllFilesContent: (contents) => set({ allFilesContent: contents }),
+  resetAllFilesContent: () => set({ allFilesContent: {} }),
 
   repositoryLanguage: null,
   setRepositoryLanguage: (language) => set({ repositoryLanguage: language }),

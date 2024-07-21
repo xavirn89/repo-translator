@@ -13,7 +13,7 @@ const Loading = () => {
   if (!loading) return null
 
   return (
-    <div className='bg-black/75 absolute flex w-full h-screen top-0 justify-center items-center'>
+    <div className='bg-black/75 fixed inset-0 flex justify-center items-center z-50'>
       <l-ring size="100" stroke="15" bg-opacity="0" speed="2" color="white" />
     </div>
   )
