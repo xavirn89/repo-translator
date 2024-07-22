@@ -1,10 +1,10 @@
 'use client'
 import React from 'react'
 import useStateStore from '@/stores/stateStore'
-import RepoContents from './phase-one/RepoContents'
+import RepoContents from '@/sections/dashboard/RepoContents'
 import { AppStates } from '@/types/global'
-import BaseTranslation from '@/sections/BaseTranslation'
-import AllTranslations from '@/sections/AllTranslations'
+import BaseTranslation from '@/sections/dashboard/BaseTranslation'
+import AllTranslations from '@/sections/dashboard/AllTranslations'
 
 const Dashboard = () => {
   const { currentState } = useStateStore()

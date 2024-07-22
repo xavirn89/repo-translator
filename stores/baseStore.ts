@@ -33,14 +33,14 @@ interface BaseStoreState {
   addTranslationLanguage: (language: LanguageItem) => void
   removeTranslationLanguage: (code: string) => void
 
-  phase1Response: string | null
-  setPhase1Response: (response: string) => void
-  resetPhase1Response: () => void
+  baseTranslation: string | null
+  setBaseTranslation: (response: string) => void
+  resetBaseTranslation: () => void
 
-  phase2Response: string[]
-  setPhase2Response: (response: string[]) => void
-  addPhase2Response: (response: string) => void
-  removePhase2Response: (response: string) => void
+  allTranslations: string[]
+  setAllTranslations: (response: string[]) => void
+  addAllTranslations: (response: string) => void
+  removeAllTransltions: (response: string) => void
 }
 
 const useBaseStore = create<BaseStoreState>((set, get) => ({
@@ -73,14 +73,14 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
   addTranslationLanguage: (language) => set((state) => ({ translationLanguages: [...state.translationLanguages, language] })),
   removeTranslationLanguage: (code) => set((state) => ({ translationLanguages: state.translationLanguages.filter((lang) => lang.code !== code) })),
 
-  phase1Response: null,
-  setPhase1Response: (response) => set({ phase1Response: response }),
-  resetPhase1Response: () => set({ phase1Response: null }),
+  baseTranslation: null,
+  setBaseTranslation: (response) => set({ baseTranslation: response }),
+  resetBaseTranslation: () => set({ baseTranslation: null }),
 
-  phase2Response: [],
-  setPhase2Response: (response) => set({ phase2Response: response }),
-  addPhase2Response: (response) => set((state) => ({ phase2Response: [...state.phase2Response, response] })),
-  removePhase2Response: (response) => set((state) => ({ phase2Response: state.phase2Response.filter((res) => res !== response) })),
+  allTranslations: [],
+  setAllTranslations: (response) => set({ allTranslations: response }),
+  addAllTranslations: (response) => set((state) => ({ allTranslations: [...state.allTranslations, response] })),
+  removeAllTransltions: (response) => set((state) => ({ allTranslations: state.allTranslations.filter((res) => res !== response) })),
 }))
 
 export default useBaseStore

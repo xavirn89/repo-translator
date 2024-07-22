@@ -40,7 +40,7 @@ const InputSearchContents = () => {
           currentContents.filter(item => 
             item.name.toLowerCase().includes(term) &&
             !selectedContents.some(selected => selected.sha === item.sha)
-          ).slice(0, 6) // Limiting the results to 6 items
+          ).slice(0, 6)
         )
       } else {
         const foundItem = currentContents.find(item => item.name.toLowerCase() === term)

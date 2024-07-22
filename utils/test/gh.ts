@@ -879,10 +879,10 @@ Please note the following:
 4. Answer me only the JSON, dont tell me how you did it or anything else.
 `;
 
-export const promptgpt2 = (repositoryLanguage: LanguageItem, translationLanguages: LanguageItem[], phase1Response: string | null) => {
+export const promptgpt2 = (repositoryLanguage: LanguageItem, translationLanguages: LanguageItem[], baseTranslation: string | null) => {
   return `
   I have this JSON object that contains all the text strings from my webpage in ${repositoryLanguage.name}. I want that you create copies of the JSON object in ${translationLanguages.map((language) => language.name).join(', ')} with the text strings translated to each language. The JSON objects should look like this example:
-  ${phase1Response}
+  ${baseTranslation}
   Please note the following:
   1. Translate only the text strings, do not translate the variable names.
   2. Ensure that the translations are accurate and contextually correct.

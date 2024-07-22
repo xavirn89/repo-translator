@@ -1,8 +1,8 @@
 'use client'
-import InputSearchContents from '@/components/InputSearchContents'
-import SelectedContents from '@/components/SelectedContents'
+import InputSearchContents from '@/components/repo-contents/InputSearchContents'
+import SelectedContents from '@/components/repo-contents/SelectedContents'
 
-const SearchAndSelectData = () => {
+const SelectContent = () => {
 
   return (
     <div className='relative flex flex-col w-full gap-2'>
@@ -23,4 +23,4 @@ const SearchAndSelectData = () => {
   )
 }
 
-export default SearchAndSelectData
+export default SelectContent

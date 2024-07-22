@@ -1,9 +1,9 @@
 'use client'
 import useBaseStore from '@/stores/baseStore'
-import SearchAndSelectData from '@/sections/phase-one/SearchAndSelectData'
-import RecursiveRepoContents from '@/sections/phase-one/RecursiveRepoContents'
-import SelectOriginalLanguage from '@/sections/phase-one/SelectOriginalLanguage'
-import ButtonProcessPhaseOne from '@/sections/phase-one/ButtonProcessPhaseOne'
+import SelectContent from '@/sections/dashboard/repo-contents/SelectContent'
+import RecursiveRepoContents from '@/components/repo-contents/RecursiveRepoContents'
+import SelectOriginalLanguage from '@/sections/dashboard/repo-contents/SelectOriginalLanguage'
+import ProcessBaseTranslation from '@/components/repo-contents/ProcessBaseTranslation'
 
 const RepoContents = () => {
   const { repoContents } = useBaseStore()
@@ -18,9 +18,9 @@ const RepoContents = () => {
         </div>
 
         <div className='flex flex-col w-2/3 gap-4'>
-          <SearchAndSelectData />
+          <SelectContent />
           <SelectOriginalLanguage />
-          <ButtonProcessPhaseOne />
+          <ProcessBaseTranslation />
         </div>
       </div>
     </div>

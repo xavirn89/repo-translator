@@ -8,13 +8,13 @@ import useHandleBack from '@/hooks/useHandleBack';
 import { fetchRepoContents } from '@/utils/github';
 
 const InputRepo: React.FC = () => {
-  const { repoUrl, setRepoUrl, setRepoContents, setLoading } = useBaseStore();
+  const { repoUrl, setRepoUrl, repoContents, setRepoContents, setLoading } = useBaseStore();
   const { currentState, goToState } = useStateStore();
   const [error, setError] = useState<string>('');
   const { goBack } = useHandleBack();
 
   useEffect(() => {
-    if (!repoUrl) return;
+    if (!repoUrl || repoContents) return;
 
     const debouncedFetchFiles = debounce(async (url: string) => {
       try {
@@ -55,7 +55,7 @@ const InputRepo: React.FC = () => {
       <div className='flex w-full items-center pt-10'>
         <div className='flex w-1/3 justify-end pr-6'>
           {currentState !== AppStates.HOME && (
-            <button className='p-2 bg-blue-500 text-white rounded hover:bg-blue-600' onClick={handleGoBack}>
+            <button className='p-2 bg-transparent text-red-400 rounded-lg border border-red-400 transition ease-in-out duration-300 hover:scale-105 hover:bg-red-400/25 hover:text-white' onClick={handleGoBack}>
               Atrás
             </button>
           )}

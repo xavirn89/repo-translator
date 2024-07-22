@@ -136,14 +136,6 @@ export const languages = [
     "code": "si"
   },
   {
-    "name": "Macedonian",
-    "code": "mk"
-  },
-  {
-    "name": "Albanian",
-    "code": "al"
-  },
-  {
     "name": "Latvian",
     "code": "lv"
   },
@@ -164,10 +156,6 @@ export const languages = [
     "code": "ie"
   },
   {
-    "name": "Luxembourgish",
-    "code": "lu"
-  },
-  {
     "name": "Icelandic",
     "code": "is"
   },
@@ -179,32 +167,4 @@ export const languages = [
     "name": "Swahili",
     "code": "ke"
   },
-  {
-    "name": "Amharic",
-    "code": "et"
-  },
-  {
-    "name": "Somali",
-    "code": "so"
-  },
-  {
-    "name": "Hausa",
-    "code": "ng"
-  },
-  {
-    "name": "Yoruba",
-    "code": "ng"
-  },
-  {
-    "name": "Igbo",
-    "code": "ng"
-  },
-  {
-    "name": "Zulu",
-    "code": "za"
-  },
-  {
-    "name": "Xhosa",
-    "code": "za"
-  }
 ]

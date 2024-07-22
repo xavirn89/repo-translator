@@ -6,10 +6,11 @@ import useBaseStore from '@/stores/baseStore';
 import { promptPhaseOne } from '@/utils/ai-sdk/prompts';
 import useStateStore from '@/stores/stateStore';
 import { AppStates } from '@/types/global';
+import { CleanAndPrepareBaseTranslation } from '@/utils/openai';
 
 
-const ButtonProcessPhaseOne = () => {
-  const { selectedContents, setLoading, allFilesContent, setAllFilesContent, loading, repositoryLanguage, setPhase1Response } = useBaseStore();
+const ProcessBaseTranslation = () => {
+  const { selectedContents, setLoading, allFilesContent, setAllFilesContent, loading, repositoryLanguage, setBaseTranslation } = useBaseStore();
   const { goToState } = useStateStore();
 
   const fetchAllFiles = async (item: RepositoryItem): Promise<{ [key: string]: string }> => {
@@ -79,14 +80,8 @@ const ButtonProcessPhaseOne = () => {
           model: openai('gpt-4-turbo'),
           prompt: promptPhaseOne(repositoryLanguage) + Object.values(cleaned).join(' '),
         });
-        console.log(JSON.stringify(text, null, 2));
-        if (text.startsWith('```json')) {
-          text = text.slice(7);
-        }
-        if (text.endsWith('```')) {
-          text = text.slice(0, -3);
-        }
-        setPhase1Response(text);
+        const cleanedText = CleanAndPrepareBaseTranslation(text);
+        setBaseTranslation(cleanedText);
         goToState(AppStates.BASE_TRANSLATION);
       } catch (err: any) {
         console.error(err);
@@ -105,7 +100,7 @@ const ButtonProcessPhaseOne = () => {
       </div>
 
       <div className='flex w-1/2 justify-center'>
-        <button className='w-52 py-2 bg-green-500 rounded text-white font-bold hover:bg-green-700 transition duration-200' onClick={handleProcessSelectedContents}>
+        <button className='w-52 p-2 bg-transparent text-green-500 rounded-lg border border-green-500 transition ease-in-out duration-300 hover:scale-105 hover:bg-green-400/25 hover:text-white' onClick={handleProcessSelectedContents}>
           Generar Traducción
         </button>
       </div>
@@ -113,4 +108,4 @@ const ButtonProcessPhaseOne = () => {
   )
 }
 
-export default ButtonProcessPhaseOne
+export default ProcessBaseTranslation

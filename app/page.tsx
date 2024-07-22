@@ -4,9 +4,9 @@ import Header from '@/sections/Header'
 import Footer from '@/sections/Footer'
 import InputRepo from '@/components/InputRepo'
 import Background from '@/components/Background'
-import RepoInputBanner from '@/sections/phase-one/RepoInputBanner'
+import RepoInputBanner from '@/components/RepoInputBanner'
 import Testing from '@/components/Testing'
-import Dashboard from '@/sections/Dashboard'
+import Dashboard from '@/sections/dashboard/Dashboard'
 import Loading from '@/components/Loading'
 
 

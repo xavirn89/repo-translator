@@ -4,7 +4,7 @@ import { AppStates } from '@/types/global'
 import useBaseStore from '@/stores/baseStore'
 
 const useHandleBack = () => {
-  const { resetRepoUrl, resetRepoContents, resetPhase1Response, resetAllFilesContent } = useBaseStore()
+  const { resetRepoUrl, resetRepoContents, resetBaseTranslation, resetAllFilesContent } = useBaseStore()
   const { currentState, goToState } = useStateStore()
 
   const goBack = () => {
@@ -16,7 +16,7 @@ const useHandleBack = () => {
         break
       
       case AppStates.BASE_TRANSLATION:
-        resetPhase1Response()
+        resetBaseTranslation()
         resetAllFilesContent()
         goToState(AppStates.REPOSITORY_CONTENTS)
         break

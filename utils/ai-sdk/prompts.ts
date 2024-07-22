@@ -19,14 +19,16 @@ export const promptPhaseOne = (repositoryLanguage: LanguageItem) => {
   `;
 }
 
-export const promptPhaseTwo = (repositoryLanguage: LanguageItem, translationLanguages: LanguageItem[], phase1Response: string | null) => {
+export const promptPhaseTwo = (repositoryLanguage: LanguageItem, translationLanguages: LanguageItem[], baseTranslation: string | null) => {
   return `
-  I have this JSON object that contains all the text strings from my webpage in ${repositoryLanguage.name}. I want that you create copies of the JSON object in ${translationLanguages.map((language) => language.name).join(', ')} with the text strings translated to each language. The JSON objects should look like this example:
-  ${phase1Response}
+  I have this JSON object that contains all the text strings from my webpage in ${repositoryLanguage.name}. I want you to create copies of the JSON object in ${translationLanguages.map((language) => language.name).join(', ')} with the text strings translated to each language. The JSON objects should look like this example:
+  ${baseTranslation}
   Please note the following:
   1. Translate only the text strings, do not translate the variable names.
   2. Ensure that the translations are accurate and contextually correct.
-  3. Separate each JSON object with triple backticks to ensure clear distinction between different language translations.
-  4. Answer me ONLY the JSON objects, dont tell me how you did it or starting or ending messages.
+  3. Separate each JSON object with triple backticks and the language code for clear distinction between different language translations, e.g. \`\`\`json
+  { ... }
+  \`\`\`json.
+  4. Answer me ONLY with the JSON objects, do not include any other text.
   `;
 }
