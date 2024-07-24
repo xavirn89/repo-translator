@@ -38,6 +38,9 @@ interface BaseStoreState {
   allTranslations: string[]
   setAllTranslations: (response: string[]) => void
   resetAllTranslations: () => void
+
+  customOpenAIKey: string | null
+  setCustomOpenAIKey: (key: string | null) => void
 }
 
 const useBaseStore = create<BaseStoreState>((set, get) => ({
@@ -76,6 +79,9 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
   allTranslations: [],
   setAllTranslations: (response) => set({ allTranslations: response }),
   resetAllTranslations: () => set({ allTranslations: [] }),
+
+  customOpenAIKey: null,
+  setCustomOpenAIKey: (key) => set({ customOpenAIKey: key }),
 }))
 
 export default useBaseStore

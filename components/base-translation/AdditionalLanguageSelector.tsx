@@ -4,7 +4,7 @@ import useStateStore from '@/stores/stateStore'
 import { languages } from '@/constants/languages'
 import { LanguageItem } from '@/types/languages'
 import { promptPhaseTwo } from '@/utils/ai-sdk/prompts'
-import { openai } from '@/utils/ai-sdk/openaiProvider'
+import getOpenAIClient, { openai } from '@/utils/ai-sdk/openaiProvider'
 import { generateText } from 'ai'
 import { AppStates } from '@/types/global'
 
@@ -83,8 +83,9 @@ const AdditionalLanguageSelector: React.FC = () => {
 
     try {
       const textPrompt = promptPhaseTwo(repositoryLanguage, translationLanguages, baseTranslation)
+      const openaiClient = getOpenAIClient()
       const { text } = await generateText({
-        model: openai('gpt-4-turbo'),
+        model: openaiClient('gpt-4-turbo'),
         prompt: textPrompt,
       })
 
@@ -97,6 +98,7 @@ const AdditionalLanguageSelector: React.FC = () => {
         setAllTranslations([])
       }
     } catch (err: any) {
+      console.error(err)
       setError(err.message)
     } finally {
       setLoading(false)

@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import { fetchAllFiles } from '@/utils/github'
-import { openai } from '@/utils/ai-sdk/openaiProvider'
+import getOpenAIClient, { openai } from '@/utils/ai-sdk/openaiProvider'
 import { generateText } from 'ai'
 import useBaseStore from '@/stores/baseStore'
 import { promptPhaseOne } from '@/utils/ai-sdk/prompts'
@@ -57,8 +57,9 @@ const ProcessBaseTranslation: React.FC = () => {
 
     const createPromptAndGenerateJSON = async (cleaned: { [key: string]: string }) => {
       try {
+        const openaiClient = getOpenAIClient()
         const { text } = await generateText({
-          model: openai('gpt-4-turbo'),
+          model: openaiClient('gpt-4-turbo'),
           prompt: promptPhaseOne(repositoryLanguage) + Object.values(cleaned).join(' '),
         })
         const cleanedText = CleanAndPrepareBaseTranslation(text)

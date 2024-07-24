@@ -30,7 +30,6 @@ export default function RootLayout({
         <meta name="keywords" content={(metadata.keywords as string[])?.join(", ")} />
         <meta name="author" content={(metadata.authors as Author[]).map((author) => author.name).join(", ")} />
         <title>{metadata.title as string}</title>
-        {/* Puedes agregar más metadatos aquí según sea necesario */}
       </head>
       <body className={inter.className}>
         {children}

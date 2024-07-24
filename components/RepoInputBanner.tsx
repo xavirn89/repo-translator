@@ -13,7 +13,7 @@ const RepoInputBanner: React.FC = () => {
   
   return (
     <div className='flex flex-grow w-full justify-center items-center'>
-      <div className='flex w-full max-w-5xl justify-between items-center mt-20'>
+      <div className='flex w-full max-w-5xl justify-between items-center bg-slate-500/10 py-10 px-20 mt-10 rounded-2xl'>
         <div className='flex items-center'>
           <ul>
             <li>▸ El repositorio debe ser público</li>

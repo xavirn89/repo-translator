@@ -10,7 +10,7 @@ const Header: React.FC = () => {
   
   return (
     <header className='flex flex-col w-full items-center my-10'>
-      <div className='flex flex-col w-full max-w-3xl mt-10'>
+      <div className='flex flex-col w-full max-w-3xl pt-10'>
         <p className='text-center text-xl'>
           Genera fácilmente los archivos de traducción de tu proyecto mediante un enlace a tu repositorio en GitHub.
         </p>
