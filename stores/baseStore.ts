@@ -2,7 +2,6 @@ import { create } from 'zustand'
 import { RepositoryItem } from '@/types/github'
 import { LanguageItem } from '@/types/languages'
 
-// Define the shape of your store
 interface BaseStoreState {
   repoUrl: string | null
   setRepoUrl: (url: string) => void
@@ -13,7 +12,6 @@ interface BaseStoreState {
   resetRepoContents: () => void
 
   selectedContents: RepositoryItem[]
-  setSelectedContents: (contents: RepositoryItem[]) => void
   addSelectedContent: (content: RepositoryItem) => void
   deleteSelectedContent: (content: RepositoryItem) => void
 
@@ -39,8 +37,6 @@ interface BaseStoreState {
 
   allTranslations: string[]
   setAllTranslations: (response: string[]) => void
-  addAllTranslations: (response: string) => void
-  removeAllTransltions: (response: string) => void
   resetAllTranslations: () => void
 }
 
@@ -54,7 +50,6 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
   resetRepoContents: () => set({ repoContents: null }),
 
   selectedContents: [],
-  setSelectedContents: (contents) => set({ selectedContents: contents }),
   addSelectedContent: (content) => set((state) => ({ selectedContents: [...state.selectedContents, content] })),
   deleteSelectedContent: (content) => set((state) => ({ selectedContents: state.selectedContents.filter((selected) => selected.sha !== content.sha) })),
 
@@ -80,8 +75,6 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
 
   allTranslations: [],
   setAllTranslations: (response) => set({ allTranslations: response }),
-  addAllTranslations: (response) => set((state) => ({ allTranslations: [...state.allTranslations, response] })),
-  removeAllTransltions: (response) => set((state) => ({ allTranslations: state.allTranslations.filter((res) => res !== response) })),
   resetAllTranslations: () => set({ allTranslations: [] }),
 }))
 

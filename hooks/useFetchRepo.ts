@@ -10,6 +10,11 @@ const useFetchRepo = (repoUrl: string | null) => {
   const { goToState } = useStateStore()
   const [error, setError] = useState<string>('')
 
+  /**
+   * Fetch de los archivos del repositorio
+   * In: repoUrl
+   * Out: repoContents
+  **/
   useEffect(() => {
     if (!repoUrl || (repoContents && repoContents.length)) return
 
@@ -37,7 +42,7 @@ const useFetchRepo = (repoUrl: string | null) => {
     return () => {
       debouncedFetchFiles.cancel()
     }
-  }, [repoUrl, setRepoContents, setLoading, goToState])
+  }, [repoUrl, repoContents, setRepoContents, setLoading, goToState])
 
   return { error }
 }
