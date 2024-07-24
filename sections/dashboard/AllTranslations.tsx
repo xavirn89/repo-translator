@@ -1,31 +1,31 @@
 'use client'
-import useBaseStore from '@/stores/baseStore';
-import { LanguageItem } from '@/types/languages';
-import React, { useEffect, useState } from 'react';
-
-import DownloadAllTranslations from '@/components/all-translations/DownloadAllTranslations';
+import React, { useEffect, useState } from 'react'
+import useBaseStore from '@/stores/baseStore'
+import { LanguageItem } from '@/types/languages'
+import DownloadAllTranslations from '@/components/all-translations/DownloadAllTranslations'
 
 const AllTranslations: React.FC = () => {
-  const { loading, allTranslations, translationLanguages, repositoryLanguage, baseTranslation } = useBaseStore();
-  const [activeTab, setActiveTab] = useState<number>(0);
-  const [jsonCodes, setJsonCodes] = useState<string[]>([]);
-  const [languages, setLanguages] = useState<LanguageItem[]>([]);
+  const {
+    loading,
+    allTranslations,
+    translationLanguages,
+    repositoryLanguage,
+    baseTranslation
+  } = useBaseStore()
+  const [activeTab, setActiveTab] = useState<number>(0)
+  const [jsonCodes, setJsonCodes] = useState<string[]>([])
+  const [languages, setLanguages] = useState<LanguageItem[]>([])
 
+  // Actualiza los códigos JSON y los idiomas
   useEffect(() => {
-    const codes = [];
-    if (baseTranslation) codes.push(baseTranslation);
-    allTranslations.forEach((item) => codes.push(item));
-    setJsonCodes(codes);
+    const codes = baseTranslation ? [baseTranslation, ...allTranslations] : allTranslations
+    setJsonCodes(codes)
 
-    const langs = [];
-    if (repositoryLanguage) langs.push(repositoryLanguage);
-    translationLanguages.forEach((item) => langs.push(item));
-    setLanguages(langs);
-  }, [allTranslations]);
+    const langs = repositoryLanguage ? [repositoryLanguage, ...translationLanguages] : translationLanguages
+    setLanguages(langs)
+  }, [allTranslations, baseTranslation, repositoryLanguage, translationLanguages])
 
-  console.log('Loading - allTranslations.length', loading, allTranslations.length);
-
-  if (loading || !allTranslations || allTranslations.length === 0) return null;
+  if (loading || !allTranslations || allTranslations.length === 0) return null
 
   return (
     <div className='flex flex-col w-full items-center mb-10 h-full'>
@@ -66,7 +66,7 @@ const AllTranslations: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AllTranslations;
+export default AllTranslations

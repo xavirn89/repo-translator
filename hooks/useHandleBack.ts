@@ -34,7 +34,16 @@ const useHandleBack = () => {
     }
   }
 
-  return { goBack }
+  const goHome = () => {
+    resetRepoUrl()
+    resetRepoContents()
+    resetBaseTranslation()
+    resetAllFilesContent()
+    resetAllTranslations()
+    goToState(AppStates.HOME)
+  }
+
+  return { goBack, goHome }
 }
 
 export default useHandleBack

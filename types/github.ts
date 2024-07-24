@@ -17,3 +17,8 @@ export interface RepositoryItemLinks {
   git: string
   html: string
 }
+
+export interface RecursiveRepoContentsProps {
+  items: RepositoryItem[]
+  level: number
+}

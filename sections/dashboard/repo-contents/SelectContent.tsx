@@ -1,4 +1,3 @@
-'use client'
 import InputSearchContents from '@/components/repo-contents/InputSearchContents'
 import SelectedContents from '@/components/repo-contents/SelectedContents'
 

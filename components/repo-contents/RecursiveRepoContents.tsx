@@ -1,8 +1,8 @@
-import { RepositoryItem } from '@/types/github'
 import React, { useState } from 'react'
+import { RecursiveRepoContentsProps } from '@/types/github'
 
-const RecursiveRepoContents: React.FC<{ items: RepositoryItem[], level: number }> = ({ items, level }) => {
-  const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({})
+const RecursiveRepoContents: React.FC<RecursiveRepoContentsProps> = ({ items, level }) => {
+  const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({})
 
   const handleToggle = (index: number) => {
     setExpanded(prev => ({ ...prev, [index]: !prev[index] }))
@@ -27,7 +27,7 @@ const RecursiveRepoContents: React.FC<{ items: RepositoryItem[], level: number }
             )}
           </div>
 
-          {item.content && expanded[index] && (
+          {item.type === 'dir' && item.content && expanded[index] && (
             <div className="transition-all duration-300 ease-in-out">
               <RecursiveRepoContents items={item.content} level={level + 1} />
             </div>

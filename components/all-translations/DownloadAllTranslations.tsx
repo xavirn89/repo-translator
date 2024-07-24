@@ -1,34 +1,43 @@
-import useBaseStore from '@/stores/baseStore';
-import { LanguageItem } from '@/types/languages';
-import React, { useEffect, useState } from 'react'
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+import React from 'react'
+import JSZip from 'jszip'
+import { saveAs } from 'file-saver'
+import { LanguageItem } from '@/types/languages'
 
-interface InProps {
+interface DownloadAllTranslationsProps {
   jsonCodes: string[]
   languages: LanguageItem[]
 }
 
-const DownloadAllTranslations = ({ jsonCodes, languages }: InProps) => {
+const DownloadAllTranslations: React.FC<DownloadAllTranslationsProps> = ({ jsonCodes, languages }) => {
 
+  /**
+   * Descarga un archivo JSON
+   * In: index
+   * Out: Descarga el archivo JSON correspondiente al índice
+  **/
   const handleDownload = (index: number) => {
-    const element = document.createElement('a');
-    const file = new Blob([jsonCodes[index]], { type: 'application/json' });
-    element.href = URL.createObjectURL(file);
-    element.download = `${languages[index].code}.json`;
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
+    const element = document.createElement('a')
+    const file = new Blob([jsonCodes[index]], { type: 'application/json' })
+    element.href = URL.createObjectURL(file)
+    element.download = `${languages[index].code}.json`
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+  }
 
+  /**
+   * Descarga todos los archivos JSON en un archivo ZIP
+   * In: jsonCodes
+   * Out: Descarga un archivo ZIP con todos los archivos JSON
+  **/
   const handleDownloadAll = async () => {
-    const zip = new JSZip();
+    const zip = new JSZip()
     jsonCodes.forEach((code, index) => {
-      zip.file(`${languages[index].code}.json`, code);
-    });
-    const content = await zip.generateAsync({ type: 'blob' });
-    saveAs(content, 'translations.zip');
-  };
+      zip.file(`${languages[index].code}.json`, code)
+    })
+    const content = await zip.generateAsync({ type: 'blob' })
+    saveAs(content, 'translations.zip')
+  }
 
   return (
     <div className='flex flex-col mt-8 gap-4'>
@@ -61,7 +70,10 @@ const DownloadAllTranslations = ({ jsonCodes, languages }: InProps) => {
       </div>
       
       <div className='flex justify-end'>
-        <button className='mt-8 w-fit p-2 bg-transparent text-lg text-green-500 rounded-lg border border-green-500 transition ease-in-out duration-300 hover:scale-105 hover:bg-green-400/25 hover:text-white' onClick={() => handleDownloadAll()}>
+        <button
+          className='mt-8 w-fit p-2 bg-transparent text-lg text-green-500 rounded-lg border border-green-500 transition ease-in-out duration-300 hover:scale-105 hover:bg-green-400/25 hover:text-white'
+          onClick={handleDownloadAll}
+        >
           Descargar todos
         </button>
       </div>

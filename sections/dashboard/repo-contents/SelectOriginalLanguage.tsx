@@ -1,53 +1,55 @@
 'use client'
-import React, { useState, useEffect, ChangeEvent } from 'react';
-import useBaseStore from '@/stores/baseStore';
-import { languages } from '@/constants/languages';
-import 'flag-icons/css/flag-icons.min.css';
-import { LanguageItem } from '@/types/languages';
+import React, { useState, useEffect, ChangeEvent, FocusEvent } from 'react'
+import useBaseStore from '@/stores/baseStore'
+import { languages } from '@/constants/languages'
+import 'flag-icons/css/flag-icons.min.css'
+import { LanguageItem } from '@/types/languages'
 
-const SelectOriginalLanguage = () => {
-  const {
-    repositoryLanguage,
-    setRepositoryLanguage,
-  } = useBaseStore();
+const SelectOriginalLanguage: React.FC = () => {
+  const { repositoryLanguage, setRepositoryLanguage } = useBaseStore()
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [filteredLanguages, setFilteredLanguages] = useState<LanguageItem[]>(languages)
+  const [showLanguageList, setShowLanguageList] = useState<boolean>(false)
 
-  const [searchTermPrimary, setSearchTermPrimary] = useState('');
-  const [filteredLanguagesPrimary, setFilteredLanguagesPrimary] = useState<LanguageItem[]>(languages);
-  const [showLanguageList, setShowLanguageList] = useState(false);
-
+  // Filtra los idiomas según el término de búsqueda
   useEffect(() => {
-    if (searchTermPrimary) {
-      setShowLanguageList(true);
-      setFilteredLanguagesPrimary(
+    if (searchTerm) {
+      setFilteredLanguages(
         languages.filter((lang) =>
-          lang.name.toLowerCase().includes(searchTermPrimary.toLowerCase())
+          lang.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
-      );
+      )
+      setShowLanguageList(true)
     } else {
-      setFilteredLanguagesPrimary(languages);
+      setFilteredLanguages(languages)
     }
-  }, [searchTermPrimary]);
+  }, [searchTerm])
 
-  const handleInputChangePrimary = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTermPrimary(event.target.value);
-  };
+  // Actualiza el término de búsqueda
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+  }
 
-  const handleLanguageSelectPrimary = (lang: LanguageItem) => {
-    setRepositoryLanguage(lang);
-    setSearchTermPrimary('');
-    setShowLanguageList(false);
-  };
+  // Selecciona el idioma del repositorio
+  const handleLanguageSelect = (lang: LanguageItem) => {
+    setRepositoryLanguage(lang)
+    setSearchTerm('')
+    setShowLanguageList(false)
+  }
 
+  // Muestra la lista de idiomas al enfocar el input
   const handleInputFocus = () => {
-    setShowLanguageList(true);
-    setFilteredLanguagesPrimary(languages);
-  };
+    setShowLanguageList(true)
+    setFilteredLanguages(languages)
+  }
 
-  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (!event.currentTarget.contains(event.relatedTarget)) {
-      setShowLanguageList(false);
+  // Oculta la lista de idiomas al desenfocar el input
+  const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+      setShowLanguageList(false)
     }
-  };
+  }
+
   return (
     <div className='relative flex flex-col w-full gap-2'>
       <div className='flex'>
@@ -59,8 +61,8 @@ const SelectOriginalLanguage = () => {
           <div className='flex flex-col space-y-2 relative'>
             <input
               type="text"
-              value={searchTermPrimary}
-              onChange={handleInputChangePrimary}
+              value={searchTerm}
+              onChange={handleInputChange}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
               placeholder="Selecciona el idioma principal"
@@ -68,14 +70,18 @@ const SelectOriginalLanguage = () => {
             />
             {showLanguageList && (
               <ul className="absolute top-10 w-full bg-gray-800 border border-gray-700 rounded shadow-lg z-10 max-h-60 overflow-auto">
-                {filteredLanguagesPrimary.map((lang) => (
-                  <li key={lang.code} onMouseDown={(e) => e.preventDefault()} onClick={() => handleLanguageSelectPrimary(lang)} className="p-2 hover:bg-gray-700 cursor-pointer flex items-center">
+                {filteredLanguages.map((lang) => (
+                  <li
+                    key={lang.code}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => handleLanguageSelect(lang)}
+                    className="p-2 hover:bg-gray-700 cursor-pointer flex items-center"
+                  >
                     <span className={`fi fi-${lang.code} mr-2`}></span> {lang.name}
                   </li>
                 ))}
               </ul>
             )}
-            
           </div>
         </div>
 

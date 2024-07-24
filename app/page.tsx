@@ -5,17 +5,15 @@ import Footer from '@/sections/Footer'
 import InputRepo from '@/components/InputRepo'
 import Background from '@/components/Background'
 import RepoInputBanner from '@/components/RepoInputBanner'
-import Testing from '@/components/Testing'
 import Dashboard from '@/sections/dashboard/Dashboard'
 import Loading from '@/components/Loading'
 
-
 const Home: React.FC = () => {
+  
   return (
     <div className="flex flex-col w-full h-full min-h-screen bg-gray-900 text-white">
       <Background />
-      <Testing />
-      
+
       <div className='flex flex-col flex-grow w-full h-full z-50'>
         <Navbar />
         <Header />

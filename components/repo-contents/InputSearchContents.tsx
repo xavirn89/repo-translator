@@ -1,14 +1,16 @@
+'use client'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import useBaseStore from '@/stores/baseStore'
 import { RepositoryItem } from '@/types/github'
-import React, { ChangeEvent, useEffect, useState } from 'react'
 
-const InputSearchContents = () => {
-  const { repoContents, selectedContents, addSelectedContent, repoUrl } = useBaseStore()
+const InputSearchContents: React.FC = () => {
+  const { repoContents, selectedContents, addSelectedContent } = useBaseStore()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm)
   const [filteredContents, setFilteredContents] = useState<RepositoryItem[] | null>(null)
   const [isFocused, setIsFocused] = useState<boolean>(false)
 
+  // Debounce para el término de búsqueda
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
@@ -19,14 +21,21 @@ const InputSearchContents = () => {
     }
   }, [searchTerm])
 
+  // Actualiza el término de búsqueda
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
 
+  // Selecciona un item de la lista de resultados
   const handleSelectItem = (item: RepositoryItem) => {
     addSelectedContent(item)
   }
 
+  /**
+   * Filtra los contenidos del repositorio según el término de búsqueda
+   * In: debouncedSearchTerm, selectedContents, repoContents
+   * Out: filteredContents
+  **/
   useEffect(() => {
     const searchPaths = debouncedSearchTerm.split('/')
     let currentContents = repoContents
@@ -65,7 +74,7 @@ const InputSearchContents = () => {
         onBlur={() => setIsFocused(false)}
       />
       {isFocused && debouncedSearchTerm && filteredContents && filteredContents.length > 0 && (
-        <ul className="absolute top-12 w-2/3 bg-gray-800 border border-gray-700 rounded shadow-lg z-10">
+        <ul className="absolute top-12 w-full bg-gray-800 border border-gray-700 rounded shadow-lg z-10">
           {filteredContents.map((repoContent) => (
             <li key={repoContent.sha}>
               <button

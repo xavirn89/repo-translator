@@ -1,20 +1,23 @@
+'use client'
+import React from 'react'
 import useBaseStore from '@/stores/baseStore'
 import { RepositoryItem } from '@/types/github'
-import React from 'react'
 
-const SelectedContents = () => {
+const SelectedContents: React.FC = () => {
   const { selectedContents, deleteSelectedContent, repoUrl } = useBaseStore()
 
-  function getItemUrl(item: RepositoryItem) {
+  // Obtiene la URL del item seleccionado
+  const getItemUrl = (item: RepositoryItem): string => {
     if (!repoUrl) return ''
-
+    
     const url = item._links.html
-    const url2 = url.replace(repoUrl, '')
-    const url3 = url2.replace('/blob/main/', '')
-    const url4 = url3.replace('/tree/main/', '')
-    return url4
+    return url
+      .replace(repoUrl, '')
+      .replace('/blob/main/', '')
+      .replace('/tree/main/', '')
   }
 
+  // Elimina un item de la lista de seleccionados
   const handleRemoveItem = (item: RepositoryItem) => {
     deleteSelectedContent(item)
   }
