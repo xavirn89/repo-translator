@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Repo Translator
 
-## Getting Started
+Repo Translator es una aplicación web que permite generar fácilmente archivos de traducción para tu proyecto mediante un enlace a tu repositorio en GitHub. Utiliza inteligencia artificial para identificar el texto visible y generar archivos de traducción para todos los idiomas seleccionados.
 
-First, run the development server:
+## Características
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Generación Automática de Traducciones**: Analiza el contenido de tu repositorio de GitHub y genera archivos de traducción para múltiples idiomas usando IA.
+- **Selección de Idiomas**: Permite seleccionar el idioma original del repositorio y añadir idiomas adicionales para la traducción.
+- **Descarga de Traducciones**: Descarga los archivos de traducción generados en formato JSON.
+- **Personalización de API Key**: Añade tu propia API Key de OpenAI si los tokens de la página se han agotado.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologías Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: Framework de React para la construcción de aplicaciones web.
+- **React**: Biblioteca de JavaScript para la construcción de interfaces de usuario.
+- **TypeScript**: Superset de JavaScript que añade tipos estáticos.
+- **Tailwind CSS**: Framework de CSS para el diseño de interfaces modernas.
+- **Zustand**: Biblioteca de gestión de estado para React.
+- **OpenAI API**: API de inteligencia artificial para generación de texto.
+- **GitHub API**: API para acceder a los contenidos de los repositorios de GitHub.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Instalación
 
-## Learn More
+1. Clona este repositorio en tu máquina local:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/xavirn89/repo-translator.git
+   cd repo-translator
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Instala las dependencias:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   npm install
 
-## Deploy on Vercel
+   # o
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   yarn install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. Crea un archivo .env.local en la raíz del proyecto y añade tu API Key de OpenAI:
+   ```bash
+   NEXT_PUBLIC_OPENAI_API_KEY=tu-api-key-de-openai
+   ```
+
+## Uso
+
+1. Inicia el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+
+   # o
+
+   yarn dev
+   ```
+
+2. Abre tu navegador y navega a `http://localhost:3000`.
+
+## Estructura del Proyecto
+
+- `components/`: Componentes reutilizables de la aplicación.
+- `sections/`: Secciones específicas de la aplicación (por ejemplo, header, footer, nav, etc).
+- `stores/`: Almacenamiento de estado usando Zustand.
+- `utils/`: Utilidades y funciones auxiliares.
+- `app/`: Estructura de la app.
+
+## Contacto
+
+Autor: Xavi Ramon Nicolau  
+LinkedIn: [Xavi Ramon Nicolau](https://www.linkedin.com/in/xavi-ramon-nicolau-08289a261/)  
+GitHub: [xavirn89](https://github.com/xavirn89)
