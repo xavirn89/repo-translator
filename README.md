@@ -11,13 +11,13 @@ Repo Translator es una aplicación web que permite generar fácilmente archivos 
 
 ## Tecnologías Utilizadas
 
-- **Next.js**: Framework de React para la construcción de aplicaciones web.
-- **React**: Biblioteca de JavaScript para la construcción de interfaces de usuario.
-- **TypeScript**: Superset de JavaScript que añade tipos estáticos.
-- **Tailwind CSS**: Framework de CSS para el diseño de interfaces modernas.
-- **Zustand**: Biblioteca de gestión de estado para React.
-- **OpenAI API**: API de inteligencia artificial para generación de texto.
-- **GitHub API**: API para acceder a los contenidos de los repositorios de GitHub.
+- **Next.js**
+- **React**
+- **TypeScript**
+- **Tailwind CSS**
+- **Zustand**
+- **OpenAI API**
+- **GitHub API**
 
 ## Instalación
 
