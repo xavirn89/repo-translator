@@ -99,7 +99,7 @@ const ProcessBaseTranslation = () => {
       <div className='w-1/2'>
       </div>
 
-      <div className='flex w-1/2 justify-center'>
+      <div className='flex w-1/2 justify-end'>
         <button className='w-52 p-2 bg-transparent text-green-500 rounded-lg border border-green-500 transition ease-in-out duration-300 hover:scale-105 hover:bg-green-400/25 hover:text-white' onClick={handleProcessSelectedContents}>
           Generar Traducción
         </button>

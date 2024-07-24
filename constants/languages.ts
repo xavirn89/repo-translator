@@ -167,4 +167,8 @@ export const languages = [
     "name": "Swahili",
     "code": "ke"
   },
+  {
+    "name": "Catalan",
+    "code": "es-ct"
+  }
 ]

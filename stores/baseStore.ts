@@ -41,6 +41,7 @@ interface BaseStoreState {
   setAllTranslations: (response: string[]) => void
   addAllTranslations: (response: string) => void
   removeAllTransltions: (response: string) => void
+  resetAllTranslations: () => void
 }
 
 const useBaseStore = create<BaseStoreState>((set, get) => ({
@@ -81,6 +82,7 @@ const useBaseStore = create<BaseStoreState>((set, get) => ({
   setAllTranslations: (response) => set({ allTranslations: response }),
   addAllTranslations: (response) => set((state) => ({ allTranslations: [...state.allTranslations, response] })),
   removeAllTransltions: (response) => set((state) => ({ allTranslations: state.allTranslations.filter((res) => res !== response) })),
+  resetAllTranslations: () => set({ allTranslations: [] }),
 }))
 
 export default useBaseStore

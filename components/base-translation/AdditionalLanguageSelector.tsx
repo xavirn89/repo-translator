@@ -24,6 +24,7 @@ const AdditionalLanguageSelector = () => {
   const [searchTermAdditional, setSearchTermAdditional] = useState('');
   const [filteredLanguagesAdditional, setFilteredLanguagesAdditional] = useState<LanguageItem[]>(languages);
   const [error, setError] = useState<string>('');
+  const [showLanguageList, setShowLanguageList] = useState(false);
 
   useEffect(() => {
     if (searchTermAdditional) {
@@ -109,28 +110,40 @@ const AdditionalLanguageSelector = () => {
     }
   };
 
+  const handleInputFocus = () => {
+    setShowLanguageList(true);
+    setFilteredLanguagesAdditional(languages);
+  };
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setShowLanguageList(false);
+    }
+  };
+
   return (
     <div className='flex flex-col w-full gap-4'>
       <p className='text-xl'>Añadir lenguajes adicionales:</p>
 
       <div className='flex w-full gap-2 justify-between'>
-
         <input
           type="text"
           value={searchTermAdditional}
           onChange={handleInputChangeAdditional}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
           placeholder="Selecciona los lenguajes"
           className="w-full p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button className='w-fit p-2 bg-transparent text-xl text-green-500 rounded-lg border border-green-500 transition ease-in-out duration-300 hover:scale-105 hover:bg-green-400/25 hover:text-white' onClick={handleGenerateTranslations}>
-          Generar
+          Traducir
         </button>
       </div>
 
-      {searchTermAdditional && (
-        <ul className="absolute mt-24 w-1/5 bg-gray-800 border border-gray-700 rounded shadow-lg z-10">
+      {showLanguageList && (
+        <ul className="absolute mt-24 w-1/6 bg-gray-800 border border-gray-700 rounded shadow-lg z-10 max-h-60 overflow-auto">
           {filteredLanguagesAdditional.map((lang) => (
-            <li key={lang.code} onClick={() => handleLanguageSelectAdditional(lang)} className="block w-full text-left p-2 rounded bg-gray-900 hover:bg-slate-800 transform transition duration-200 cursor-pointer">
+            <li key={lang.code} onMouseDown={(e) => e.preventDefault()} onClick={() => handleLanguageSelectAdditional(lang)} className="block w-full text-left p-2 rounded bg-gray-900 hover:bg-slate-800 transform transition duration-200 cursor-pointer">
               <span className={`fi fi-${lang.code} mr-2`}></span> {lang.name}
             </li>
           ))}

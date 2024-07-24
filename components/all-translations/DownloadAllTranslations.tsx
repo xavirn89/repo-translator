@@ -34,7 +34,7 @@ const DownloadAllTranslations = ({ jsonCodes, languages }: InProps) => {
     <div className='flex flex-col mt-8 gap-4'>
       <div className='text-xl'>Descargar archivos:</div>
 
-      <div className='flex gap-4'>
+      <div className='flex flex-wrap gap-4'>
         {jsonCodes.map((_, index) => (
           <div key={index} className='flex items-center gap-2 cursor-pointer border rounded-lg p-2 pr-3' onClick={() => handleDownload(index)}>
             <svg
@@ -60,7 +60,7 @@ const DownloadAllTranslations = ({ jsonCodes, languages }: InProps) => {
         ))}
       </div>
       
-      <div className='flex justify-center'>
+      <div className='flex justify-end'>
         <button className='mt-8 w-fit p-2 bg-transparent text-lg text-green-500 rounded-lg border border-green-500 transition ease-in-out duration-300 hover:scale-105 hover:bg-green-400/25 hover:text-white' onClick={() => handleDownloadAll()}>
           Descargar todos
         </button>
