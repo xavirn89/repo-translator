@@ -2,6 +2,8 @@
 
 Repo Translator es una aplicación web que permite generar fácilmente archivos de traducción para tu proyecto mediante un enlace a tu repositorio en GitHub. Utiliza inteligencia artificial para identificar el texto visible y generar archivos de traducción para todos los idiomas seleccionados.
 
+![HomePage](./public/images/repotranslatorhome.png)
+
 ## Características
 
 - **Generación Automática de Traducciones**: Analiza el contenido de tu repositorio de GitHub y genera archivos de traducción para múltiples idiomas usando IA.
@@ -16,6 +18,7 @@ Repo Translator es una aplicación web que permite generar fácilmente archivos 
 - **TypeScript**
 - **Tailwind CSS**
 - **Zustand**
+- **Vercel SDK AI**
 - **OpenAI API**
 - **GitHub API**
 
@@ -55,7 +58,7 @@ Repo Translator es una aplicación web que permite generar fácilmente archivos 
    yarn dev
    ```
 
-2. Abre tu navegador y navega a `http://localhost:3000`.
+2. Abre tu navegador y ve a `http://localhost:3000`.
 
 ## Estructura del Proyecto
 

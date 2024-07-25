@@ -9,7 +9,7 @@ export const openai = createOpenAI({
 const getOpenAIClient = () => {
   const { customOpenAIKey } = useBaseStore.getState();
   const apiKey = customOpenAIKey || process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-
+  // const apiKey = customOpenAIKey || ''
   return createOpenAI({
     apiKey,
     compatibility: 'strict',
